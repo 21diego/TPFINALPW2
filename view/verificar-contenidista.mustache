@@ -2,20 +2,16 @@
 
     <div style="width: 40rem;" {{#error}}class="card border-danger"{{/error}}{{^error}}class="card"{{/error}}>
         <div class="card-header text-center">
-            Ingreso usuarios
+            Complete con los datos de la editorial
         </div>
         <div class="card-body">
-            <form action="/login" method="post">
+            <form action="/contenidista/verificar" method="post">
                 <fieldset>
                     <div class="form-group">
-                        <label for="email">email</label>
-                        <input type="text" id="email" name="email" class="form-control" autocomplete="off" required>
+                        <label for="cuit">CUIT (sin guiones)</label>
+                        <input type="number" id="cuit" name="cuit" class="form-control" value="{{data.nombre}}" autocomplete="off" required>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Contraseña</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Ingresar</button>
+                    <button type="submit" class="btn btn-primary">Solicitar</button>
                 </fieldset>
             </form>
         </div>
@@ -29,3 +25,4 @@
 
     </div>
 </div>
+

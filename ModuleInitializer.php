@@ -73,4 +73,16 @@ class ModuleInitializer
         return new LogoutController();
     }
 
+    public function createContenidistaController(){
+        include_once ("controller/ContenidistaController.php");
+        include_once ("dao/EditorialDAO.php");
+        include_once ("dao/ContenidistaDAO.php");
+        include_once ("dao/UsuarioDAO.php");
+
+        $editorialDAO = new EditorialDAO($this->database);
+        $contenidistaDAO = new ContenidistaDAO($this->database);
+        $usuarioDAO = new UsuarioDAO(($this->database));
+        return new ContenidistaController($this->renderer,$editorialDAO,$contenidistaDAO,$usuarioDAO);
+    }
+
 }

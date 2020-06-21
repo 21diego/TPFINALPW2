@@ -3,8 +3,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             {{#session.usuario}}
-                <li class="nav-item"><span class="navbar-brand mb-0 h1"><i class="fa fa-user" aria-hidden="true"></i>
-                    {{session.usuario.usuario}}</span></li>
+                <li class="nav-item"><span class="navbar-brand mb-0 h1">
+                    <button style="border: none">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                        {{session.usuario.apellido}}, {{session.usuario.nombre}}</span>
+                    </button>
+                </li>
                 <li class="nav-item"><a class="nav-link" href="/logout">Cerrar sesión</a></li>
             {{/session.usuario}}
             {{^session.usuario}}

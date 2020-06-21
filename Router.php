@@ -18,6 +18,7 @@ class Router
     private static function createControllerNameFromModule($module)
     {
         return "create" . ucfirst($module) . "Controller";
+
     }
 
     private static function executeActionFrom($controller, $action)
