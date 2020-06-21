@@ -1,0 +1,16 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            {{#session.usuario}}
+                <li class="nav-item"><span class="navbar-brand mb-0 h1"><i class="fa fa-user" aria-hidden="true"></i>
+                    {{session.usuario.usuario}}</span></li>
+                <li class="nav-item"><a class="nav-link" href="/logout">Cerrar sesión</a></li>
+            {{/session.usuario}}
+            {{^session.usuario}}
+                <li class="nav-item"><a class="nav-link" href="/login">Iniciar sesión</a></li>
+                <li class="nav-item"><a class="nav-link" href="/registro">Registro</a></li>
+            {{/session.usuario}}
+        </ul>
+    </div>
+</nav>
