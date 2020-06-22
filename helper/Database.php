@@ -67,9 +67,11 @@ class Database
      */
     public function updateQuery($sql){
         mysqli_query($this->conexion,$sql);
-        echo $this->conexion->error;
-        if ($this->conexion->affected_rows <= 0) {
+        if ($this->conexion->affected_rows < 0) {
             throw new UpdateEntityException("No se pudo actualizar entidad", $sql);
+        }
+        else if($this->conexion->affected_rows == 0){
+            throw new SameDataUpdateException("Se setearon los mismos valores", $sql);
         }
         return $this->conexion->insert_id;
     }

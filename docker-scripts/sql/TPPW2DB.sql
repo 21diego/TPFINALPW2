@@ -344,6 +344,9 @@ ALTER TABLE `suscripcion`
 ALTER TABLE `usuario`
   MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
+ALTER TABLE `contenidista`
+    MODIFY `idcontenidista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
 --
 -- Constraints for dumped tables
 --
