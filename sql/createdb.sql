@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 22, 2020 at 11:03 PM
+-- Generation Time: Jun 24, 2020 at 01:03 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -24,39 +24,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `adquirido_por`
---
-
-CREATE TABLE `adquirido_por` (
-  `usuarioId` int(11) NOT NULL,
-  `suscripcionId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `agrupada_en`
---
-
-CREATE TABLE `agrupada_en` (
-  `noticiaId` int(11) NOT NULL,
-  `seccionId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `contenida_en`
---
-
-CREATE TABLE `contenida_en` (
-  `publicacionId` int(11) NOT NULL,
-  `seccionId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `contenidista`
 --
 
@@ -71,7 +38,7 @@ CREATE TABLE `contenidista` (
 --
 
 INSERT INTO `contenidista` (`idcontenidista`, `idUsuario`, `editorial`) VALUES
-(0, 9, 1);
+(18, 13, 1);
 
 -- --------------------------------------------------------
 
@@ -126,10 +93,12 @@ INSERT INTO `locacion` (`idLocacion`, `localidad`, `provincia`, `pais`, `calle`,
 CREATE TABLE `noticia` (
   `idnoticia` int(11) NOT NULL,
   `titulo` varchar(45) NOT NULL,
-  `texto` varchar(300) NOT NULL,
+  `cuerpo` varchar(300) NOT NULL,
   `imagenUrl` varchar(100) DEFAULT NULL,
-  `enlace` varchar(100) DEFAULT NULL,
-  `editor` int(11) NOT NULL
+  `enlace` varchar(100) NOT NULL,
+  `editor` int(11) DEFAULT NULL,
+  `seccion` int(11) DEFAULT NULL,
+  `publicacion` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -171,6 +140,15 @@ CREATE TABLE `seccion` (
   `nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `seccion`
+--
+
+INSERT INTO `seccion` (`idseccion`, `nombre`) VALUES
+(1, 'politica'),
+(2, 'economia'),
+(3, 'videojuegos');
+
 -- --------------------------------------------------------
 
 --
@@ -206,45 +184,13 @@ CREATE TABLE `usuario` (
 
 INSERT INTO `usuario` (`idUsuario`, `nombre`, `apellido`, `dni`, `mail`, `password`, `rol`) VALUES
 (8, 'admin', 'admin', 99999999, 'admin@mail.com', '21232f297a57a5a743894a0e4a801fc3', 'admin'),
-(9, 'Diego', 'Morinigo', 39374219, 'mori@mail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'pendiente'),
-(10, 'gaston', 'mori', 123, 'gaston@mail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'usuario');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `vive_en`
---
-
-CREATE TABLE `vive_en` (
-  `idvive_en` int(11) NOT NULL,
-  `locacionId` int(11) NOT NULL,
-  `usuarioId` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+(12, 'usuario', 'user', 1234, 'usuario@mail.com', 'f8032d5cae3de20fcec887f395ec9a6a', 'usuario'),
+(13, 'contenidista', 'content', 1234, 'contenidista@mail.com', 'e44c8feaf2e9f09016919a52d9853f68', 'contenidista'),
+(14, 'diego', 'mori', 3937, 'mori@mail.com', '81dc9bdb52d04dc20036dbd8313ed055', 'usuario');
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `adquirido_por`
---
-ALTER TABLE `adquirido_por`
-  ADD PRIMARY KEY (`usuarioId`,`suscripcionId`),
-  ADD KEY `suscripcion` (`suscripcionId`);
-
---
--- Indexes for table `agrupada_en`
---
-ALTER TABLE `agrupada_en`
-  ADD PRIMARY KEY (`noticiaId`,`seccionId`),
-  ADD KEY `seccion` (`seccionId`);
-
---
--- Indexes for table `contenida_en`
---
-ALTER TABLE `contenida_en`
-  ADD PRIMARY KEY (`publicacionId`,`seccionId`),
-  ADD KEY `secc` (`seccionId`);
 
 --
 -- Indexes for table `contenidista`
@@ -272,7 +218,9 @@ ALTER TABLE `locacion`
 --
 ALTER TABLE `noticia`
   ADD PRIMARY KEY (`idnoticia`),
-  ADD KEY `editorNoticia` (`editor`);
+  ADD KEY `editorNoticia` (`editor`),
+  ADD KEY `seccion` (`seccion`),
+  ADD KEY `publicacion` (`publicacion`);
 
 --
 -- Indexes for table `publicacion`
@@ -309,16 +257,14 @@ ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idUsuario`);
 
 --
--- Indexes for table `vive_en`
---
-ALTER TABLE `vive_en`
-  ADD PRIMARY KEY (`idvive_en`),
-  ADD KEY `locacion` (`locacionId`),
-  ADD KEY `usuario` (`usuarioId`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `contenidista`
+--
+ALTER TABLE `contenidista`
+  MODIFY `idcontenidista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `editorial`
@@ -333,6 +279,30 @@ ALTER TABLE `locacion`
   MODIFY `idLocacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT for table `noticia`
+--
+ALTER TABLE `noticia`
+  MODIFY `idnoticia` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `publicacion`
+--
+ALTER TABLE `publicacion`
+  MODIFY `idpublicacion` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `recibo`
+--
+ALTER TABLE `recibo`
+  MODIFY `idrecibo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `seccion`
+--
+ALTER TABLE `seccion`
+  MODIFY `idseccion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `suscripcion`
 --
 ALTER TABLE `suscripcion`
@@ -342,35 +312,11 @@ ALTER TABLE `suscripcion`
 -- AUTO_INCREMENT for table `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
-
-ALTER TABLE `contenidista`
-    MODIFY `idcontenidista` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Constraints for dumped tables
 --
-
---
--- Constraints for table `adquirido_por`
---
-ALTER TABLE `adquirido_por`
-  ADD CONSTRAINT `suscripcion` FOREIGN KEY (`suscripcionId`) REFERENCES `suscripcion` (`idsuscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `user` FOREIGN KEY (`usuarioId`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `agrupada_en`
---
-ALTER TABLE `agrupada_en`
-  ADD CONSTRAINT `noticia` FOREIGN KEY (`noticiaId`) REFERENCES `noticia` (`idnoticia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `seccion` FOREIGN KEY (`seccionId`) REFERENCES `seccion` (`idseccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `contenida_en`
---
-ALTER TABLE `contenida_en`
-  ADD CONSTRAINT `publicacion` FOREIGN KEY (`publicacionId`) REFERENCES `publicacion` (`idpublicacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `secc` FOREIGN KEY (`seccionId`) REFERENCES `seccion` (`idseccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `contenidista`
@@ -389,7 +335,9 @@ ALTER TABLE `editorial`
 -- Constraints for table `noticia`
 --
 ALTER TABLE `noticia`
-  ADD CONSTRAINT `editorNoticia` FOREIGN KEY (`editor`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `editorNoticia` FOREIGN KEY (`editor`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `noticia_ibfk_3` FOREIGN KEY (`seccion`) REFERENCES `seccion` (`idseccion`),
+  ADD CONSTRAINT `noticia_ibfk_4` FOREIGN KEY (`publicacion`) REFERENCES `publicacion` (`idpublicacion`);
 
 --
 -- Constraints for table `publicacion`
@@ -404,13 +352,6 @@ ALTER TABLE `publicacion`
 --
 ALTER TABLE `recibo`
   ADD CONSTRAINT `susc` FOREIGN KEY (`suscripcionId`) REFERENCES `suscripcion` (`idsuscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Constraints for table `vive_en`
---
-ALTER TABLE `vive_en`
-  ADD CONSTRAINT `locacion` FOREIGN KEY (`locacionId`) REFERENCES `locacion` (`idLocacion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `usuario` FOREIGN KEY (`usuarioId`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
