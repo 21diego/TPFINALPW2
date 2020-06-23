@@ -10,6 +10,14 @@
 </head>
 <body>
 {{> header }}
+{{#session}}
+    {{#admin}} {{>menuadmin}} {{/admin}}
+    {{^admin}}
+        {{#contenidista}} {{>menucontenidista}} {{/contenidista}}
+        {{^contenidista}} {{>menuuser}} {{/contenidista}}
+    {{/admin}}
+{{/session}}
+
 {{{ content }}}
 {{> footer }}
 </body>

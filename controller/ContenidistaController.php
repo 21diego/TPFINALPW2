@@ -39,6 +39,7 @@ class ContenidistaController {
             $ideditorial = $this->editorial->getEditorial($cuit)['ideditorial'];
             $_SESSION['usuario']['rol'] = Rol::Pendiente;
             $usuario = $_SESSION['usuario'];
+            var_dump($usuario);
 
             $this->contenidista->postContenidista($usuario['id'],$ideditorial);
             $this->usuario->updateUsuario($usuario);
