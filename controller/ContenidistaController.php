@@ -41,7 +41,7 @@ class ContenidistaController {
             $usuario = $_SESSION['usuario'];
             var_dump($usuario);
 
-            $this->contenidista->postContenidista($usuario['id'],$ideditorial);
+            $this->contenidista->postContenidista($usuario['idUsuario'],$ideditorial);
             $this->usuario->updateUsuario($usuario);
 
             echo $this->renderer->render("view/dashboard.mustache");

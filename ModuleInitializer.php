@@ -84,5 +84,14 @@ class ModuleInitializer
         $usuarioDAO = new UsuarioDAO(($this->database));
         return new ContenidistaController($this->renderer,$editorialDAO,$contenidistaDAO,$usuarioDAO);
     }
+    public function createAdminController(){
+        include_once ("controller/AdminController.php");
+        include_once ("dao/ContenidistaDAO.php");
+        include_once ("dao/UsuarioDAO.php");
+
+        $contenidistaDAO = new ContenidistaDAO($this->database);
+        $usuarioDAO = new UsuarioDAO(($this->database));
+        return new AdminController($this->renderer,$contenidistaDAO,$usuarioDAO);
+    }
 
 }
