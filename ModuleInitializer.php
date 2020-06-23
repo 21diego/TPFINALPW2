@@ -94,4 +94,12 @@ class ModuleInitializer
         return new AdminController($this->renderer,$contenidistaDAO,$usuarioDAO);
     }
 
+    public function createNoticiaController(){
+        include_once ("controller/NoticiaController.php");
+        include_once ("dao/NoticiaDAO.php");
+
+        $noticiaDAO = new NoticiaDAO($this->database);
+        return new NoticiaController($this->renderer,$noticiaDAO);
+    }
+
 }

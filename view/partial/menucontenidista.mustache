@@ -1,17 +1,16 @@
 <ul>
-    MENU DE CONTENIDISTA
-    {{#session.usuario}}
-        <li>
-
-            <i class="fa fa-user" aria-hidden="true"></i>
-            {{session.usuario.apellido}}, {{session.usuario.nombre}}</span>
-
+    MENU DE Contenidista
+    <ul>
+        <li>Ver Secciones</li>
+        <li>Mis Compras [suscripcion/individual]</li>
+        <li>Contenido gratuito</li>
+        <li>-------------------------------</li>
+        <li>Gestion
+            <ul>
+                <li><a href="/noticia/crearNoticia">Crear Noticia</a></li>
+                <li>En espera</li>
+            </ul>
         </li>
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Cerrar sesión</a></li>
-    {{/session.usuario}}
-    {{^session.usuario}}
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Iniciar sesión</a></li>
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Registro</a></li>
-    {{/session.usuario}}
+    </ul>
+
 </ul>

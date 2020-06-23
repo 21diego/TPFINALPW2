@@ -1,17 +1,11 @@
 <ul>
     MENU DE ADMIN
-    {{#session.usuario}}
-        <li>
+    <ul>
+        <li><a href="/admin/pendientes">Lista Pendiente Usuarios</a></li>
+        <li>lista de publicaciones pendientes</li>
+        <li>-----------------------------</li>
+        <li>Estadistica</li>
 
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                        {{session.usuario.apellido}}, {{session.usuario.nombre}}</span>
+    </ul>
 
-        </li>
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Cerrar sesión</a></li>
-    {{/session.usuario}}
-    {{^session.usuario}}
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Iniciar sesión</a></li>
-        <li class="nav-item"><a class="nav-link" href="../../index.php">Registro</a></li>
-    {{/session.usuario}}
 </ul>

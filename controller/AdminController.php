@@ -1,5 +1,8 @@
 <?php
- class AdminController{
+
+require_once "controller/GenericController.php";
+
+ class AdminController extends GenericController {
     private $renderer;
     private $usuarioDAO;
     private $contenidistaDAO;
@@ -19,7 +22,8 @@
      }
 
      public function getRechazarVerificacion(){
-        $idUsuario = $_GET["idUsuario"];
+
+         $idUsuario = $_GET["idUsuario"];
 
             try {
                 $usuario = $this->usuarioDAO->getUsuarioById($idUsuario);
@@ -27,9 +31,8 @@
 
 
                 $contenidista = $this->contenidistaDAO->getContenidistaByUsuario($usuario["idUsuario"]);
-                $_SESSION["usuario"] = $usuario;
 
-                $this->usuarioDAO->updateUsuario($_SESSION["usuario"]);
+                $this->usuarioDAO->updateUsuario($usuario);
 
                 $this->contenidistaDAO->deleteContenidista($contenidista["idcontenidista"]);
 
@@ -52,7 +55,6 @@
          try {
              $usuario = $this->usuarioDAO->getUsuarioById($idUsuario);
              $usuario["rol"] = Rol::Contenidista;
-             $_SESSION["usuario"] = $usuario;
 
              $this->usuarioDAO->updateUsuario($usuario);
 
@@ -69,14 +71,16 @@
          }
      }
      public function getPendientes(){
+
+         $rol = $_SESSION['usuario']['rol'];
          $usuarios = $this->usuarioDAO->getUsuariosPendiente();
          if(count($usuarios) == 0){
-             echo $this->renderer->render("view/lista-pendiente.mustache",
-                 array("listaVacia" => "no hay usuarios pendientes"));
+             $data = array("listaVacia" => "no hay usuarios pendientes", "$rol" => 'rol');
+             $this->verficarUsuario("view/lista-pendiente.mustache",$data,$this->renderer);
          }else {
              $keys = array_keys($usuarios[0]);
-             echo $this->renderer->render("view/lista-pendiente.mustache",
-                 array("usuarios" => $usuarios, "keys" => $keys));
+             $data = array("usuarios" => $usuarios, "keys" => $keys, "$rol" => 'rol');
+             $this->verficarUsuario("view/lista-pendiente.mustache",$data,$this->renderer);
          }
      }
 
