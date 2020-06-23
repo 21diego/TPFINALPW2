@@ -97,9 +97,11 @@ class ModuleInitializer
     public function createNoticiaController(){
         include_once ("controller/NoticiaController.php");
         include_once ("dao/NoticiaDAO.php");
+        include_once ("dao/SeccionDAO.php");
 
+        $seccionDAO = new SeccionDAO($this->database);
         $noticiaDAO = new NoticiaDAO($this->database);
-        return new NoticiaController($this->renderer,$noticiaDAO);
+        return new NoticiaController($this->renderer,$noticiaDAO,$seccionDAO);
     }
 
 }

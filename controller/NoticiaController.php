@@ -7,20 +7,24 @@ class NoticiaController extends GenericController {
 
     private $renderer;
     private $noticia;
+    private $seccion;
 
     /**
      * NoticiaController constructor.
      * @param Renderer $renderer
      * @param NoticiaDAO $noticia
+     * @param SeccionDAO $seccion
      */
-    public function __construct($renderer,$noticia) {
+    public function __construct($renderer, $noticia,$seccion) {
         $this->renderer = $renderer;
         $this->noticia = $noticia;
+        $this->seccion = $seccion;
     }
 
     public function getCrearNoticia(){
         $rol = $_SESSION['usuario']['rol'];
-        $data = array("$rol"=> 'rol');
+        $secciones = $this->seccion->getSeccion();
+        $data = array("$rol"=> 'rol', 'secciones' => $secciones);
         $this->verficarUsuario("view/contenidista/crear-noticia.mustache",$data,$this->renderer);
     }
 
@@ -29,6 +33,8 @@ class NoticiaController extends GenericController {
         $titulo = $_POST['titulo'];
         $cuerpo = $_POST['cuerpo'];
         $seccion = isset($_POST['seccion'])? $_POST['seccion'] : null;
+        echo $seccion;
+        echo $_SESSION["usuario"]["idUsuario"];
 
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
             $type = '.' . explode('/',$_FILES['image']['type'])[1];
@@ -42,6 +48,8 @@ class NoticiaController extends GenericController {
                 $noticia->setTitulo($titulo);
                 $noticia->setCuerpo($cuerpo);
                 $noticia->setImagen($image);
+                $noticia->setSeccion($seccion);
+                $noticia->setEditor($_SESSION["usuario"]["idUsuario"]);
 
                 $this->noticia->postNoticia($noticia);
                 echo $this->renderer->render("view/dashboard.mustache");

@@ -7,6 +7,8 @@ class Noticia {
     private $titulo;
     private $cuerpo;
     private $imagen;
+    private $seccion;
+    private $editor;
 
     /**
      * Noticia constructor.
@@ -14,6 +16,8 @@ class Noticia {
      * @param $titulo
      * @param $cuerpo
      * @param $imagen
+     * @param $seccion
+     * @param $editor
      */
 
     /**
@@ -70,6 +74,38 @@ class Noticia {
      */
     public function setImagen($imagen) {
         $this->imagen = $imagen;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEditor()
+    {
+        return $this->editor;
+    }
+
+    /**
+     * @param mixed $editor
+     */
+    public function setEditor($editor)
+    {
+        $this->editor = $editor;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSeccion()
+    {
+        return $this->seccion;
+    }
+
+    /**
+     * @param mixed $seccion
+     */
+    public function setSeccion($seccion)
+    {
+        $this->seccion = $seccion;
     }
 
 }
