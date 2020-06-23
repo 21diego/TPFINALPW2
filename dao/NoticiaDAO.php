@@ -21,11 +21,13 @@ class NoticiaDAO {
         $titulo = $noticia->getTitulo();
         $cuerpo = $noticia->getCuerpo();
         $imagen = $noticia->getImagen();
+        $seccion = $noticia->getSeccion();
+        $editor = $noticia->getEditor();
         try{
             $this
             ->conexion
-            ->insertQuery("insert into noticia(titulo,cuerpo,imagenURL)
-                         values ('$titulo','$cuerpo','$imagen')");
+            ->insertQuery("insert into noticia(titulo,cuerpo,imagenURL,seccion,editor)
+                         values ('$titulo','$cuerpo','$imagen','$seccion','$editor')");
         }
         catch (Exception $ex){
 
