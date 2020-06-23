@@ -1,5 +1,7 @@
 <?php
 
+require_once 'excepciones/EntityNotFoundException.php';
+require_once 'excepciones/AlreadyRequestException.php';
 
 class ContenidistaDAO {
 
@@ -13,11 +15,29 @@ class ContenidistaDAO {
         $this->conexion = $conexion;
     }
 
-    public function postContenidista($idusuario,$ideditorial){
+    public function getContenidistaByUsuario($idUsuario){
         return $this
                 ->conexion
-                ->insertQuery("insert into contenidista(idUsuario,editorial)
+                ->querySingleRow("select c.idcontenidista, c.idUsuario, c.editorial 
+                                from contenidista c where idUsuario = $idUsuario");
+    }
+
+    public function postContenidista($idusuario,$ideditorial){
+        try{
+            $this
+            ->conexion
+            ->querySingleRow("select c.idcontenidista, c.idUsuario, c.editorial 
+                        from contenidista c 
+                        where idUsuario = $idusuario and editorial = $ideditorial");
+        }
+        catch (EntityNotFoundException $ex){
+            return $this
+                    ->conexion
+                    ->insertQuery("insert into contenidista(idUsuario,editorial)
                                  values ($idusuario,$ideditorial)");
+        }
+        throw new AlreadyRequestException("Ya se envió una solicitud");
+
     }
     public function getContenidistaByUsuario($idUsuario){
         return $this

@@ -78,10 +78,10 @@ class UsuarioDAO
         ->updateQuery("update usuario
                             set nombre = '$nombre'
                             , apellido = '$apellido'
-                            , dni = '$dni'
+                            , dni = $dni
                             , mail = '$mail'
                             , rol = '$rol'
-                             where idUsuario = '$id'");
+                             where idUsuario = $id");
 
     }
 }

@@ -50,6 +50,11 @@ class ContenidistaController {
                     "error" => "No existe una editorial con ese cuit"
             ));
         }
+        catch (AlreadyRequestException $ex){
+            echo $this->renderer->render("view/verificar-contenidista.mustache", array(
+                    "error" => "Ya enviaste una solicitud de aceptacion"
+            ));
+        }
 
     }
 
