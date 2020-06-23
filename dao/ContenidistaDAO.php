@@ -39,6 +39,19 @@ class ContenidistaDAO {
         throw new AlreadyRequestException("Ya se envió una solicitud");
 
     }
+    public function getContenidistaByUsuario($idUsuario){
+        return $this
+            ->conexion
+            ->querySingleRow("select c.idcontenidista, c.idUsuario, c.editorial 
+                                    from contenidista c where idUsuario = '$idUsuario'");
+    }
+    public function deleteContenidista($idContenidista){
+        return $this
+            ->conexion
+            ->deleteQuery("delete from contenidista 
+                                    where idcontenidista = $idContenidista");
+    }
+
 
 
 }

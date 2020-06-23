@@ -124,7 +124,7 @@ class Usuario
     {
         if (isset($usuario)) {
             return array(
-                "id" => $usuario->getId(),
+                "idUsuario" => $usuario->getId(),
                 "mail" => $usuario->getMail(),
                 "apellido" => $usuario->getApellido(),
                 "nombre" => $usuario->getNombre(),
