@@ -18,8 +18,12 @@ class DashboardController extends GenericController
     public function getIndex()
     {
         if ($this->existeSesion()) {
+            $rol = $_SESSION['usuario']['rol'];
+            echo $rol;
             echo $this->renderer->render("view/dashboard.mustache",
-                array("title" => "Dashboard"));
+                array("title" => "Dashboard",
+                        "$rol" => 'rol'));
+
         } else {
             header("Location: /login");
             exit();
