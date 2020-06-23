@@ -22,10 +22,9 @@ class NoticiaController extends GenericController {
     }
 
     public function getCrearNoticia(){
-        $rol = $_SESSION['usuario']['rol'];
         $secciones = $this->seccion->getSeccion();
-        $data = array("$rol"=> 'rol', 'secciones' => $secciones);
-        $this->verficarUsuario("view/contenidista/crear-noticia.mustache",$data,$this->renderer);
+        $data = array('secciones' => $secciones);
+        $this->genericRender("view/contenidista/crear-noticia.mustache",$data,$this->renderer);
     }
 
     public function postCrearNoticia(){
@@ -52,10 +51,11 @@ class NoticiaController extends GenericController {
                 $noticia->setEditor($_SESSION["usuario"]["idUsuario"]);
 
                 $this->noticia->postNoticia($noticia);
-                echo $this->renderer->render("view/dashboard.mustache");
+                $this->genericRender("view/dashboard.mustache",array(),$this->renderer);
             }
             else{
-                echo "No se pudo guardar";
+                $data = array("error" => "No se pudo guardar");
+                $this->genericRender("view/contenidista/crear-noticia.mustache", $data,$this->renderer);
             }
         }
 

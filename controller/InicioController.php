@@ -1,7 +1,8 @@
 <?php
 
+require_once "controller/GenericController.php";
 
-class InicioController
+class InicioController extends GenericController
 {
     private $renderer;
 
@@ -12,6 +13,10 @@ class InicioController
 
     public function getIndex()
     {
+        if ($this->existeSesion()) {
+            header("Location: /dashboard");
+            exit();
+        }
         echo $this->renderer->render("view/inicio.mustache");
     }
 }

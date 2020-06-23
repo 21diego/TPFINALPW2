@@ -1,11 +1,12 @@
 <?php
 
+require_once "controller/GenericController.php";
 include_once "dao/EditorialDAO.php";
 include_once "dao/ContenidistaDAO.php";
 include_once "dao/UsuarioDAO.php";
 include_once "model/Rol.php";
 
-class ContenidistaController {
+class ContenidistaController extends GenericController{
 
     private $renderer;
     private $editorial;
@@ -27,7 +28,7 @@ class ContenidistaController {
     }
 
     public function getVerificar(){
-        echo $this->renderer->render("view/verificar-contenidista.mustache");
+        $this->genericRender("view/verificar-contenidista.mustache",array(),$this->renderer);
     }
 
     public function postVerificar(){
@@ -43,7 +44,7 @@ class ContenidistaController {
             $this->contenidista->postContenidista($usuario['idUsuario'],$ideditorial);
             $this->usuario->updateUsuario($usuario);
 
-            echo $this->renderer->render("view/dashboard.mustache");
+            $this->genericRender("view/dashboard.mustache",array(),$this->renderer);
         }
         catch (EntityNotFoundException $ex){
             echo $this->renderer->render("view/verificar-contenidista.mustache", array(

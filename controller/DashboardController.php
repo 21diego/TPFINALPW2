@@ -17,8 +17,8 @@ class DashboardController extends GenericController
 
     public function getIndex()
     {
-        $rol = $_SESSION['usuario']['rol'];
-        $data = array("title" => "Dashboard","$rol" => 'rol');
-        $this->verficarUsuario("view/dashboard.mustache",$data,$this->renderer);
+        $data = array("title" => "Dashboard");
+        $vista = "view/dashboard.mustache";
+        $this->genericRender($vista,$data,$this->renderer);
     }
 }
