@@ -44,16 +44,14 @@ class RegistroController extends GenericController
 
 
         if ($password !== $password2) {
-            echo $this->renderer->render("view/registro.mustache", array(
-                "error" => "Las contraseñas no coinciden",
-                "data" => array(
-                    "nombre" => $nombre,
-                    "apellido" => $apellido,
-                    "dni" => $dni,
-                    "email" => $email
-                )
-            ));
-            exit();
+            $this->genericRender("view/registro.mustache",array(
+                            "error" => "Las contraseñas no coinciden",
+                            "data" => array(
+                                    "nombre" => $nombre,
+                                    "apellido" => $apellido,
+                                    "dni" => $dni,
+                                    "email" => $email
+                            )),$this->renderer);
         }
 
         try {
@@ -61,19 +59,15 @@ class RegistroController extends GenericController
                 ->usuarioDao
                 ->insertarUsuario($nombre, $apellido, $dni, $password, $email);
         } catch (InsertEntityException $ex) {
-            echo "$ex";
-            echo $this->renderer->render("view/registro.mustache", array(
-                "error" => "Error al generar usuario",
-                "data" => array(
-                        "nombre" => $nombre,
-                        "apellido" => $apellido,
-                        "dni" => $dni,
-                        "email" => $email
-                )
-            ));
-            exit();
+            $this->genericRender("view/registro.mustache",array(
+                    "error" => "Error al generar usuario",
+                    "data" => array(
+                            "nombre" => $nombre,
+                            "apellido" => $apellido,
+                            "dni" => $dni,
+                            "email" => $email
+                    )),$this->renderer);
         }
-
 
         if ($email) {
             echo $this->renderer->render("view/registro-exito.mustache");
