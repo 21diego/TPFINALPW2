@@ -1,8 +1,6 @@
 <div class="container-fluid">
     <h1>Bienvenido, <span class="text-danger">[{{session.usuario.rol}}]</span> {{session.usuario.mail}}</h1>
-
-    {{#session.usuario.rol.usuario}}
     <a href="/contenidista/verificar">Soy Contenidista</a>
-    {{/session.usuario.rol.usuario}}
+    <a href="/admin/pendientes">Lista Pendiente</a>
 </div>
 

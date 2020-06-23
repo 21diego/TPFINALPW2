@@ -19,6 +19,19 @@ class ContenidistaDAO {
                 ->insertQuery("insert into contenidista(idUsuario,editorial)
                                  values ($idusuario,$ideditorial)");
     }
+    public function getContenidistaByUsuario($idUsuario){
+        return $this
+            ->conexion
+            ->querySingleRow("select c.idcontenidista, c.idUsuario, c.editorial 
+                                    from contenidista c where idUsuario = '$idUsuario'");
+    }
+    public function deleteContenidista($idContenidista){
+        return $this
+            ->conexion
+            ->deleteQuery("delete from contenidista 
+                                    where idcontenidista = $idContenidista");
+    }
+
 
 
 }

@@ -47,6 +47,24 @@ class UsuarioDAO
             $usuario["mail"],
             $usuario['rol']);
     }
+    public function getUsuarioById($idUsuario)
+    {
+        $usuario = $this
+            ->conexion
+            ->querySingleRow("select us.idUsuario, us.nombre, us.apellido ,us.dni, us.mail, us.rol 
+                                    from usuario us
+                                    where idUsuario = '$idUsuario'");
+
+        return $usuario;
+    }
+    public function getUsuariosPendiente(){
+        $usuarios = $this
+            ->conexion
+            ->query("select us.idUsuario, us.nombre, us.dni, us.mail, us.rol
+                            from usuario us 
+                            where rol = 'pendiente'");
+        return $usuarios;
+    }
 
     public function updateUsuario($usuario){
         $nombre = $usuario['nombre'];
@@ -54,7 +72,7 @@ class UsuarioDAO
         $dni = $usuario['dni'];
         $mail = $usuario['mail'];
         $rol= $usuario['rol'];
-        $id = $usuario['id'];
+        $id = $usuario['idUsuario'];
         $this
         ->conexion
         ->updateQuery("update usuario
@@ -64,7 +82,6 @@ class UsuarioDAO
                             , mail = '$mail'
                             , rol = '$rol'
                              where idUsuario = '$id'");
-
 
     }
 }

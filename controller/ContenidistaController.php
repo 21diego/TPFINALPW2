@@ -40,7 +40,7 @@ class ContenidistaController {
             $_SESSION['usuario']['rol'] = Rol::Pendiente;
             $usuario = $_SESSION['usuario'];
 
-            $this->contenidista->postContenidista($usuario['id'],$ideditorial);
+            $this->contenidista->postContenidista($usuario['idUsuario'],$ideditorial);
             $this->usuario->updateUsuario($usuario);
 
             echo $this->renderer->render("view/dashboard.mustache");
