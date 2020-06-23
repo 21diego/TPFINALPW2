@@ -21,10 +21,10 @@
                     <td>{{dni}}</td>
                     <td>{{mail}}</td>
                     <td>{{rol}}</td>
-                    <td><a href ="rechazarVerificacion?idUsuario={{idUsuario}}">
-                        <i class="fas fa-times-circle"></i></a>
-                        <a href ="aceptarVerificacion?idUsuario={{idUsuario}}">
-                        <i class="fas fa-times-circle"></i></a>
+                    <td><a href ="rechazarVerificacion?idUsuario={{idUsuario}}" class="btn-sm btn-danger">
+                        <i class="fa fa-times-circle" style="color:white;font-size:1em"> Rechazar</i></a>
+                        <a href ="aceptarVerificacion?idUsuario={{idUsuario}}" class="btn-sm btn-success">
+                        <i class="fa fa-check-circle" style="color:white;font-size:1em"> Aceptar</i></a>
                     </td>
                 </tr>
             {{/usuarios}}
