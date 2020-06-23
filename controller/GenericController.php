@@ -14,9 +14,12 @@ class GenericController
     /**
      * @param string $vista
      */
-    public function verficarUsuario($vista,$data = array(),$renderer){
+    public function genericRender($vista,$data = array(),$renderer){
         if ($this->existeSesion()) {
-            echo $renderer->render($vista,$data);
+            $rol = $_SESSION['usuario']['rol'];
+            $datamerge =  array_merge($data,array("$rol"=> 'rol'));
+
+            echo $renderer->render($vista,$datamerge);
 
         } else {
             header("Location: /login");

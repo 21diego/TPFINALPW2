@@ -39,14 +39,15 @@ require_once "controller/GenericController.php";
                 return $this->getPendientes();
 
             }catch (EntityNotFoundException $exEN){
-                echo $this->renderer->render("view/lista-pendiente.mustache", array(
-                    "error" => "No existe un usuario con es Id"
-                ));
+                $data = array("error" => "No existe un usuario con es Id");
+                $vista= "view/lista-pendiente.mustache";
+                $this->genericRender($vista,$data,$this->renderer);
             }catch (UpdateEntityException $exUP){
-                echo $this->renderer->render("view/lista-pendiente.mustache", array(
-                    "error" => "No se pudo actualizar el usuario"
-                ));
+                $data = array("error" => "No se pudo actualizar el usuario");
+                $vista= "view/lista-pendiente.mustache";
+                $this->genericRender($vista,$data,$this->renderer);
             }
+            return null;
      }
 
      public function getAceptarVerificacion(){
@@ -71,17 +72,16 @@ require_once "controller/GenericController.php";
          }
      }
      public function getPendientes(){
-
-         $rol = $_SESSION['usuario']['rol'];
          $usuarios = $this->usuarioDAO->getUsuariosPendiente();
          if(count($usuarios) == 0){
-             $data = array("listaVacia" => "no hay usuarios pendientes", "$rol" => 'rol');
-             $this->verficarUsuario("view/lista-pendiente.mustache",$data,$this->renderer);
+             $data = array("listaVacia" => "no hay usuarios pendientes");
+             $vista = "view/lista-pendiente.mustache";
          }else {
              $keys = array_keys($usuarios[0]);
-             $data = array("usuarios" => $usuarios, "keys" => $keys, "$rol" => 'rol');
-             $this->verficarUsuario("view/lista-pendiente.mustache",$data,$this->renderer);
+             $data = array("usuarios" => $usuarios, "keys" => $keys);
+             $vista = "view/lista-pendiente.mustache";
          }
+         $this->genericRender($vista,$data,$this->renderer);
      }
 
  }
