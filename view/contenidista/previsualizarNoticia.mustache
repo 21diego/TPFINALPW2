@@ -1,0 +1,18 @@
+<div class="container">
+    {{#noticiaNotFound}}
+        <h2>{{noticiaNotFound}}</h2>
+    {{/noticiaNotFound}}
+    {{^noticiaNotFound}}
+        <div>
+            <h1>{{noticia.titulo}}</h1>
+        </div>
+        <div>
+            <img src="{{source}}{{noticia.imagenURL}}" width="500" alt="{{noticia.imagenURL}}">
+        </div>
+        <div>
+            <p>{{noticia.cuerpo}}</p>
+        </div>
+        <div><button><a href="CrearNoticia?idnoticia={{noticia.idnoticia}}">Editar</a></button></div>
+        <div><button><a href="EnviarAProduccion?idnoticia={{noticia.idnoticia}}">Enviar a Produccion</a></button></div>
+    {{/noticiaNotFound}}
+</div>
