@@ -60,4 +60,16 @@ class NoticiaController extends GenericController {
         }
 
     }
+
+    public function getVistaPublicacion(){
+        $secciones = "";
+        $data = array(
+            "publicacion" => array(
+                    "nombre" => "",
+                    "portada" => "",
+                    "secciones" => $secciones
+            )
+        );
+    }
+
 }

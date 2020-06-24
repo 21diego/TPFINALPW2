@@ -104,4 +104,14 @@ class ModuleInitializer
         return new NoticiaController($this->renderer,$noticiaDAO,$seccionDAO);
     }
 
+    public function createPublicacionController(){
+        include_once ("controller/PublicacionController.php");
+        include_once ("dao/PublicacionDAO.php");
+        include_once ("dao/ContenidistaDAO.php");
+
+        $publicacionDAO = new PublicacionDAO($this->database);
+        $contenidistaDAO = new ContenidistaDAO($this->database);
+        return new PublicacionController($this->renderer,$publicacionDAO,$contenidistaDAO);
+    }
+
 }
