@@ -18,7 +18,6 @@ class GenericController
         if ($this->existeSesion()) {
             $rol = $_SESSION['usuario']['rol'];
             $datamerge =  array_merge($data,array("$rol"=> 'rol'));
-
             echo $renderer->render($vista,$datamerge);
 
         } else {

@@ -9,6 +9,7 @@ class Noticia {
     private $imagen;
     private $seccion;
     private $editor;
+    private $estado;
 
     /**
      * Noticia constructor.
@@ -18,6 +19,7 @@ class Noticia {
      * @param $imagen
      * @param $seccion
      * @param $editor
+     * @param $estado
      */
 
     /**
@@ -108,4 +110,19 @@ class Noticia {
         $this->seccion = $seccion;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * @param mixed $estado
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
 }
