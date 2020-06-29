@@ -1,12 +1,11 @@
 <?php
 
-require_once "controller/GenericController.php";
 include_once "dao/EditorialDAO.php";
 include_once "dao/ContenidistaDAO.php";
 include_once "dao/UsuarioDAO.php";
 include_once "model/Rol.php";
 
-class ContenidistaController extends GenericController{
+class ContenidistaController{
 
     private $renderer;
     private $editorial;
@@ -28,7 +27,7 @@ class ContenidistaController extends GenericController{
     }
 
     public function getVerificar(){
-        $this->genericRender("view/verificar-contenidista.mustache",array(),$this->renderer);
+        $this->renderer->render("view/verificar-contenidista.mustache",array());
     }
 
     public function postVerificar(){
@@ -44,15 +43,15 @@ class ContenidistaController extends GenericController{
             $this->contenidista->postContenidista($usuario['idUsuario'],$ideditorial);
             $this->usuario->updateUsuario($usuario);
 
-            $this->genericRender("view/dashboard.mustache",array(),$this->renderer);
+            $this->renderer->render("view/dashboard.mustache",array());
         }
         catch (EntityNotFoundException $ex){
-            echo $this->renderer->render("view/verificar-contenidista.mustache", array(
+            $this->renderer->render("view/verificar-contenidista.mustache", array(
                     "error" => "No existe una editorial con ese cuit"
             ));
         }
         catch (AlreadyRequestException $ex){
-            echo $this->renderer->render("view/verificar-contenidista.mustache", array(
+            $this->renderer->render("view/verificar-contenidista.mustache", array(
                     "error" => "Ya enviaste una solicitud de aceptacion"
             ));
         }

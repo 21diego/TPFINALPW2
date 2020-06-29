@@ -1,6 +1,7 @@
 <?php
 
 require_once "./model/Usuario.php";
+require_once "./helper/Library.php";
 
 class Renderer
 {
@@ -21,15 +22,22 @@ class Renderer
         $view = $this->mustache->render($contentAsString, array_merge($this->getArrayData(), $data));
 
 
-        return $this->mustache->render("{{> doc }}", $this->getArrayDataWithView($view, $data));
+        echo $this->mustache->render("{{> doc }}", $this->getArrayDataWithView($view, $data));
     }
 
     private function getArrayData()
     {
+        if(Library::existeSesion()){
+            $rol = $_SESSION['usuario']['rol'];
+        }
+        else{
+            $rol = 'noRol';
+        }
         return array(
             "session" => $_SESSION,
             "cookie" => $_COOKIE,
             "request" => $_REQUEST,
+            "$rol" => 'rol'
         );
     }
 
