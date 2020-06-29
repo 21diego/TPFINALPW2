@@ -21,7 +21,7 @@ class LoginController
 
     public function getIndex()
     {
-        if ($this->existeSesion()) {
+        if (Library::existeSesion()) {
             header("Location: /dashboard");
             exit();
         }

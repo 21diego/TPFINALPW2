@@ -4,10 +4,19 @@
         <ul class="navbar-nav mr-auto">
             {{#session.usuario}}
                 <li class="nav-item"><span class="navbar-brand mb-0 h1">
-                    <button style="border: none" id="menu-toggle">
-                        <i class="fa fa-user" aria-hidden="true"></i>
-                        {{session.usuario.apellido}}, {{session.usuario.nombre}}</span>
-                    </button>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{session.usuario.apellido}}, {{session.usuario.nombre}}</span>
+                        </button>
+                        {{#session}}
+                            {{#admin}} {{>menuadmin}} {{/admin}}
+                            {{^admin}}
+                                {{#contenidista}} {{>menucontenidista}} {{/contenidista}}
+                                {{^contenidista}} {{>menuuser}} {{/contenidista}}
+                            {{/admin}}
+                        {{/session}}
+
                 </li>
                 <li class="nav-item"><a class="nav-link" href="/dashboard">Home</a></li>
                 <li class="nav-item"><a class="nav-link" href="/logout">Cerrar sesión</a></li>
