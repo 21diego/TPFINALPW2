@@ -46,6 +46,15 @@ class NoticiaDAO {
         return $noticias;
     }
 
+    public function getNoticias(){
+        $noticias = $this
+                ->conexion
+                ->query("select n.idnoticia, n.titulo, s.nombre as seccion, n.estado
+                                    from noticia n
+                                    join seccion s on n.seccion = s.idseccion");
+        return $noticias;
+    }
+
     public function getNoticia($idNoticia){
         $noticia = $this
                   ->conexion

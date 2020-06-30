@@ -124,4 +124,13 @@ class NoticiaController{
         }
         $this->renderer->render("view/dashboard.mustache", $data);
     }
+
+    public function getLista(){
+        $noticias = $this->noticia->getNoticias();
+        if(count($noticias) == 0){
+            $data = array("listaVacia" => "no hay noticias en edicion");
+        }
+        echo json_encode($noticias,JSON_PRETTY_PRINT);
+
+    }
 }
