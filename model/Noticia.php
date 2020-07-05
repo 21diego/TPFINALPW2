@@ -99,4 +99,19 @@ class Noticia {
         $this->seccion = $seccion;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
+
+    /**
+     * @param mixed $estado
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+    }
 }

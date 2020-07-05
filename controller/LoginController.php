@@ -1,8 +1,8 @@
 <?php
 
-require_once "controller/GenericController.php";
+require_once "helper/Library.php";
 
-class LoginController extends GenericController
+class LoginController
 {
     private $usuario;
     private $renderer;
@@ -21,17 +21,17 @@ class LoginController extends GenericController
 
     public function getIndex()
     {
-        if ($this->existeSesion()) {
+        if (Library::existeSesion()) {
             header("Location: /dashboard");
             exit();
         }
-        echo $this->renderer->render("view/login.mustache");
+        $this->renderer->render("view/login.mustache");
 
     }
 
     public function postIndex()
     {
-        if ($this->existeSesion()) {
+        if (Library::existeSesion()) {
             header("Location: /dashboard");
             exit();
         }
@@ -43,11 +43,11 @@ class LoginController extends GenericController
 
             $_SESSION["usuario"] = Usuario::toArrayMap($usuario);
 
-            echo $this->renderer->render("view/login-exitoso.mustache", array(
+            $this->renderer->render("view/login-exitoso.mustache", array(
                 "usuario" => Usuario::toArrayMap($usuario)
             ));
         } catch (EntityNotFoundException $ex) {
-            echo $this->renderer->render("view/login.mustache", array(
+            $this->renderer->render("view/login.mustache", array(
                 "error" => "Datos inválidos"
             ));
         }

@@ -1,8 +1,8 @@
 <?php
 
-require_once "controller/GenericController.php";
+require_once "helper/Library.php";
 
-class InicioController extends GenericController
+class InicioController
 {
     private $renderer;
 
@@ -13,10 +13,10 @@ class InicioController extends GenericController
 
     public function getIndex()
     {
-        if ($this->existeSesion()) {
+        if (Library::existeSesion()) {
             header("Location: /dashboard");
             exit();
         }
-        echo $this->renderer->render("view/inicio.mustache");
+        $this->renderer->render("view/inicio.mustache");
     }
 }

@@ -24,4 +24,5 @@ class AlreadyRequestException extends RuntimeException
     {
         return $this->mensaje;
     }
+
 }

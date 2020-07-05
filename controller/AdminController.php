@@ -1,8 +1,8 @@
 <?php
 
-require_once "controller/GenericController.php";
 
- class AdminController extends GenericController {
+
+ class AdminController {
     private $renderer;
     private $usuarioDAO;
     private $contenidistaDAO;
@@ -41,11 +41,11 @@ require_once "controller/GenericController.php";
             }catch (EntityNotFoundException $exEN){
                 $data = array("error" => "No existe un usuario con es Id");
                 $vista= "view/lista-pendiente.mustache";
-                $this->genericRender($vista,$data,$this->renderer);
+                $this->renderer->render($vista,$data);
             }catch (UpdateEntityException $exUP){
                 $data = array("error" => "No se pudo actualizar el usuario");
                 $vista= "view/lista-pendiente.mustache";
-                $this->genericRender($vista,$data,$this->renderer);
+                $this->renderer->render($vista,$data);
             }
             return null;
      }
@@ -62,11 +62,11 @@ require_once "controller/GenericController.php";
              return $this->getPendientes();
 
          }catch (EntityNotFoundException $exEN){
-             echo $this->renderer->render("", array(
+             $this->renderer->render("", array(
                  "error" => "No existe un usuario con es Id"
              ));
          }catch (UpdateEntityException $exUP){
-             echo $this->renderer->render("", array(
+             $this->renderer->render("", array(
                  "error" => "No se pudo actualizar el usuario"
              ));
          }
@@ -81,7 +81,7 @@ require_once "controller/GenericController.php";
              $data = array("usuarios" => $usuarios, "keys" => $keys);
              $vista = "view/lista-pendiente.mustache";
          }
-         $this->genericRender($vista,$data,$this->renderer);
+         $this->renderer->render($vista,$data);
      }
 
  }

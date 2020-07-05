@@ -1,8 +1,8 @@
 <?php
 
-require_once "controller/GenericController.php";
+require_once "helper/Library.php";
 
-class RegistroController extends GenericController
+class RegistroController
 {
     private $usuarioDao;
     private $renderer;
@@ -20,7 +20,7 @@ class RegistroController extends GenericController
 
     public function getIndex()
     {
-        if ($this->existeSesion()) {
+        if (Library::existeSesion()) {
             header("Location: /dashboard");
             exit();
         }
@@ -30,7 +30,7 @@ class RegistroController extends GenericController
 
     public function postIndex()
     {
-        if ($this->existeSesion()) {
+        if (Library::existeSesion()) {
             header("Location: /dashboard");
             exit();
         }
@@ -44,14 +44,14 @@ class RegistroController extends GenericController
 
 
         if ($password !== $password2) {
-            $this->genericRender("view/registro.mustache",array(
+            $this->renderer->render("view/registro.mustache",array(
                             "error" => "Las contraseñas no coinciden",
                             "data" => array(
                                     "nombre" => $nombre,
                                     "apellido" => $apellido,
                                     "dni" => $dni,
                                     "email" => $email
-                            )),$this->renderer);
+                            )));
         }
 
         try {
@@ -59,20 +59,20 @@ class RegistroController extends GenericController
                 ->usuarioDao
                 ->insertarUsuario($nombre, $apellido, $dni, $password, $email);
         } catch (InsertEntityException $ex) {
-            $this->genericRender("view/registro.mustache",array(
+            $this->renderer->render("view/registro.mustache",array(
                     "error" => "Error al generar usuario",
                     "data" => array(
                             "nombre" => $nombre,
                             "apellido" => $apellido,
                             "dni" => $dni,
                             "email" => $email
-                    )),$this->renderer);
+                    )));
         }
 
         if ($email) {
-            echo $this->renderer->render("view/registro-exito.mustache");
+            $this->renderer->render("view/registro-exito.mustache");
         } else {
-            echo $this->renderer->render("view/registro.mustache", array(
+            $this->renderer->render("view/registro.mustache", array(
                 "error" => "Error al realizar registro",
                 "data" => array(
                         "nombre" => $nombre,

@@ -1,8 +1,7 @@
 <?php
 
-require_once "controller/GenericController.php";
 
-class DashboardController extends GenericController
+class DashboardController
 {
     private $renderer;
 
@@ -19,6 +18,6 @@ class DashboardController extends GenericController
     {
         $data = array("title" => "Dashboard");
         $vista = "view/dashboard.mustache";
-        $this->genericRender($vista,$data,$this->renderer);
+        $this->renderer->render($vista,$data);
     }
 }

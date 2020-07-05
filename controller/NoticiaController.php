@@ -1,9 +1,9 @@
 <?php
 
-include_once "controller/GenericController.php";
 include_once "model/Noticia.php";
+include_once  "model/EstadoNoticia.php";
 
-class NoticiaController extends GenericController {
+class NoticiaController{
 
     private $renderer;
     private $noticia;
@@ -22,43 +22,107 @@ class NoticiaController extends GenericController {
     }
 
     public function getCrearNoticia(){
-        $secciones = $this->seccion->getSeccion();
-        $data = array('secciones' => $secciones);
-        $this->genericRender("view/contenidista/crear-noticia.mustache",$data,$this->renderer);
+        $idnoticia = isset($_GET["idnoticia"]) ? $_GET["idnoticia"] : false;
+        if($idnoticia == false){
+            $secciones = $this->seccion->getSeccion();
+            $data = array('secciones' => $secciones);
+        }else{
+            $noticia = $this->noticia->getNoticia($idnoticia);
+            $secciones = $this->seccion->getSeccion();
+            $source = $_SERVER["DOCUMENT_ROOT"] . '/resources/';
+            $data = array('secciones' => $secciones, "noticia" => $noticia, "source" => $source);
+        }
+
+        $this->renderer->render("view/contenidista/crear-noticia.mustache",$data);
     }
 
     public function postCrearNoticia(){
+
         $source = $_SERVER["DOCUMENT_ROOT"] . '/resources/';
         $titulo = $_POST['titulo'];
         $cuerpo = $_POST['cuerpo'];
         $seccion = isset($_POST['seccion'])? $_POST['seccion'] : null;
-        echo $seccion;
-        echo $_SESSION["usuario"]["idUsuario"];
 
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $type = '.' . explode('/',$_FILES['image']['type'])[1];
-            $permitted_chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            $nombre = 'img-'.substr(str_shuffle($permitted_chars), 0, 20).$type;
-            $tmpname = $_FILES['image']['tmp_name'];
+        try{
+            $name = Library::uploadImage($_FILES['image'],$source);
 
-            if(move_uploaded_file($tmpname,$source.$nombre)){
-                $image = $nombre;
-                $noticia = new Noticia();
-                $noticia->setTitulo($titulo);
-                $noticia->setCuerpo($cuerpo);
-                $noticia->setImagen($image);
-                $noticia->setSeccion($seccion);
-                $noticia->setEditor($_SESSION["usuario"]["idUsuario"]);
+            $noticia = new Noticia();
+            $noticia->setTitulo($titulo);
+            $noticia->setCuerpo($cuerpo);
+            $noticia->setImagen($name);
+            $noticia->setSeccion($seccion);
+            $noticia->setEditor($_SESSION["usuario"]["idUsuario"]);
+            $noticia->setEstado(EstadoNoticia::EnEdicion);
 
-                $this->noticia->postNoticia($noticia);
-                $this->genericRender("view/dashboard.mustache",array(),$this->renderer);
-            }
-            else{
-                $data = array("error" => "No se pudo guardar");
-                $this->genericRender("view/contenidista/crear-noticia.mustache", $data,$this->renderer);
-            }
+            $this->noticia->postNoticia($noticia);
+            $this->renderer->render("view/dashboard.mustache",array());
+        }catch (Exception $e){
+            $data = array("error" => $e->getMessage());
+            $this->renderer->render("view/contenidista/crear-noticia.mustache", $data);
         }
 
+
+    }
+
+    public function postEditarNoticia(){
+        $imagen = $_FILES["image"];
+        $noticia = $this->noticia->getNoticia($_POST["idnoticia"]);
+
+        if($imagen["name"] != ""){
+            $source = $_SERVER["DOCUMENT_ROOT"] . '/resources/';
+
+            try{
+                Library::deleteImage($source.$noticia['imagenURL']);
+                $name = Library::uploadImage($imagen,$source);
+            }catch(Exception $e){
+                $name = $noticia["imagenURL"];
+            }
+            $noticia["imagenURL"] = $name;
+        }
+
+        $noticia["titulo"] = $_POST["titulo"];
+        $noticia["cuerpo"] = $_POST["cuerpo"];
+        $noticia["seccion"] = $_POST["seccion"];
+
+        $this->noticia->updateNoticia($noticia);
+        $data = array();
+        $this->renderer->render("view/noticiasEdicion.mustache",$data);
+    }
+
+    public function getNoticiasEdicion(){
+        $noticias = $this->noticia->getNoticiasEnEdicion($_SESSION["usuario"]["idUsuario"]);
+        if(count($noticias) == 0){
+            $data = array("listaVacia" => "no hay noticias en edicion");
+        }else{
+            $keys = array_keys($noticias[0]);
+            $data = array("noticias" => $noticias, "keys" => $keys);
+        }
+        $this->renderer->render("view/contenidista/noticiasEdicion.mustache",$data);
+    }
+    public function getPrevisualizarNoticia(){
+        $idnoticia = $_GET["idnoticia"];
+        $noticia = $this->noticia->getNoticia($idnoticia);
+        if(empty($noticia)){
+            $data = array("noticiaNotFound" => "no se pudo previsualizar la noticia");
+        }else{
+            $source = $_SERVER["DOCUMENT_ROOT"] . '/resources/';
+            $data = array("noticia"=> $noticia, "source" => $source);
+        }
+        $this->renderer->render("view/contenidista/previsualizarNoticia.mustache", $data);
+    }
+
+    public function getEnviarAProduccion(){
+        $idnoticia = $_GET["idnoticia"];
+        $noticia = $this->noticia->getNoticia($idnoticia);
+        try{
+            $noticia["estado"] = EstadoNoticia::EnProduccion;
+
+            $this->noticia->updateNoticia($noticia);
+            $data = array();
+        }catch (EntityNotFoundException $ex){
+            $data = array("error" => "error al actualizar noticia");
+        }
+        $this->renderer->render("view/dashboard.mustache", $data);
     }
 
     public function getVistaPublicacion(){
