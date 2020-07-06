@@ -1,7 +1,7 @@
 <?php
 
 include_once "model/Noticia.php";
-include_once  "model/EstadoNoticia.php";
+include_once "model/EstadoDesarrollo.php";
 
 class NoticiaController{
 
@@ -52,7 +52,7 @@ class NoticiaController{
             $noticia->setImagen($name);
             $noticia->setSeccion($seccion);
             $noticia->setEditor($_SESSION["usuario"]["idUsuario"]);
-            $noticia->setEstado(EstadoNoticia::EnEdicion);
+            $noticia->setEstado(EstadoDesarrollo::EnEdicion);
 
             $this->noticia->postNoticia($noticia);
             $this->renderer->render("view/dashboard.mustache",array());
@@ -106,7 +106,10 @@ class NoticiaController{
             $data = array("noticiaNotFound" => "no se pudo previsualizar la noticia");
         }else{
             $source = $_SERVER["DOCUMENT_ROOT"] . '/resources/';
-            $data = array("noticia"=> $noticia, "source" => $source);
+            $editorial = isset($_GET['editorial'])?$_GET['editorial']:false;
+            $publicacion = isset($_GET['publicacion'])?$_GET['publicacion']:false;
+            $data = array("noticia"=> $noticia, "source" => $source,
+                    "editorial" => $editorial, "publicacion"=>$publicacion);
         }
         $this->renderer->render("view/contenidista/previsualizarNoticia.mustache", $data);
     }
@@ -115,7 +118,7 @@ class NoticiaController{
         $idnoticia = $_GET["idnoticia"];
         $noticia = $this->noticia->getNoticia($idnoticia);
         try{
-            $noticia["estado"] = EstadoNoticia::EnProduccion;
+            $noticia["estado"] = EstadoDesarrollo::EnProduccion;
 
             $this->noticia->updateNoticia($noticia);
             $data = array();
@@ -124,4 +127,31 @@ class NoticiaController{
         }
         $this->renderer->render("view/dashboard.mustache", $data);
     }
+
+    public function getEnviarAEdicion(){
+        $idnoticia = $_GET["idnoticia"];
+        $noticia = $this->noticia->getNoticia($idnoticia);
+        try{
+            $noticia["estado"] = EstadoDesarrollo::EnEdicion;
+
+            $this->noticia->updateNoticia($noticia);
+            $data = array();
+        }catch (EntityNotFoundException $ex){
+            $data = array("error" => "error al actualizar noticia");
+        }
+        header('Location: /dashboard');
+        exit();
+    }
+
+    public function getVistaPublicacion(){
+        $secciones = "";
+        $data = array(
+            "publicacion" => array(
+                    "nombre" => "",
+                    "portada" => "",
+                    "secciones" => $secciones
+            )
+        );
+    }
+
 }

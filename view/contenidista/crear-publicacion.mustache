@@ -1,0 +1,36 @@
+
+    <div class="d-flex justify-content-center py-3">
+
+        <div style="width: 40rem;" {{#error}}class="card border-danger"{{/error}}{{^error}}class="card"{{/error}}>
+            <div class="card-header text-center">
+                Crea una Publicacion!
+            </div>
+            <div class="card-body">
+                <form action="crearPublicacion" method="post" enctype="multipart/form-data">
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="nombre">Agregue un titulo a la publicacion:</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="" autocomplete="off" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="portada">Agregue una imagen para la portada:</label>
+                            <input type="file" id="portada" name="portada"
+                                   class="form-control" autocomplete="off" value="">
+                        </div>
+                        <button type="reset" class="btn btn-danger">Limpiar campos</button>
+                        <button type="submit" class="btn btn-success">Crear!</button>
+                    </fieldset>
+                </form>
+            </div>
+            {{#error}}
+                <div class="p-2 bd-highlight">
+                    <div class="alert alert-danger" role="alert">
+                        {{error}}
+                    </div>
+                </div>
+            {{/error}}
+
+        </div>
+    </div>
+
+

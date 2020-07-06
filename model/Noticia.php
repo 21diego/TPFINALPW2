@@ -9,18 +9,7 @@ class Noticia {
     private $imagen;
     private $seccion;
     private $editor;
-    private $estado;
 
-    /**
-     * Noticia constructor.
-     * @param $id
-     * @param $titulo
-     * @param $cuerpo
-     * @param $imagen
-     * @param $seccion
-     * @param $editor
-     * @param $estado
-     */
 
     /**
      * @return mixed

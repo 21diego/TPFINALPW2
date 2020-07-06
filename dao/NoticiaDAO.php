@@ -1,5 +1,6 @@
 <?php
 
+require_once "model/EstadoDesarrollo.php";
 
 class NoticiaDAO {
 
@@ -46,6 +47,16 @@ class NoticiaDAO {
         return $noticias;
     }
 
+    public function getNoticiasEnProdPorEditorial($editorial){
+        return $this
+                ->conexion
+                ->query("select n.idnoticia, n.titulo, u.nombre, u.apellido
+                                from noticia n
+                                join contenidista c on n.editor = c.idUsuario
+                                join usuario u on u.idUsuario = c.idUsuario
+                                where c.editorial = '$editorial' and estado = 'enProduccion'");
+    }
+
     public function getNoticia($idNoticia){
         $noticia = $this
                   ->conexion
@@ -56,6 +67,16 @@ class NoticiaDAO {
 
         return $noticia;
     }
+
+    public function addNoticiaToPublicacion($idnoticia,$idpublicacion){
+        $estado = EstadoDesarrollo::Publicado;
+        $this->conexion
+                ->updateQuery("update noticia
+                                    set publicacion = '$idpublicacion'
+                                    ,estado = '$estado'
+                                    where idnoticia = '$idnoticia'");
+    }
+
     public function updateNoticia($noticia){
         $idnoticia = $noticia["idnoticia"];
         $titulo = $noticia['titulo'];

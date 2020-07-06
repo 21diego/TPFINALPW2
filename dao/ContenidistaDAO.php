@@ -22,6 +22,13 @@ class ContenidistaDAO {
                                 from contenidista c where idUsuario = $idUsuario");
     }
 
+    public function getMiEditorial($idUsuario){
+        return $this
+                ->conexion
+                ->querySingleRow("select c.idUsuario,c.editorial
+                                from contenidista c where idUsuario = $idUsuario");
+    }
+
     public function postContenidista($idusuario,$ideditorial){
         try{
             $this
