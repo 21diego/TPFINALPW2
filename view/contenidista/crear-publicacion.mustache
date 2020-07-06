@@ -1,4 +1,4 @@
-{{#comienzo}}
+
     <div class="d-flex justify-content-center py-3">
 
         <div style="width: 40rem;" {{#error}}class="card border-danger"{{/error}}{{^error}}class="card"{{/error}}>
@@ -18,7 +18,7 @@
                                    class="form-control" autocomplete="off" value="">
                         </div>
                         <button type="reset" class="btn btn-danger">Limpiar campos</button>
-                        <button type="submit" class="btn btn-success">Siguiente</button>
+                        <button type="submit" class="btn btn-success">Crear!</button>
                     </fieldset>
                 </form>
             </div>
@@ -32,14 +32,5 @@
 
         </div>
     </div>
-{{/comienzo}}
-{{^comienzo}}
-    {{#paso2}}
-        <h2>paso2</h2>
-        <a href="crearPublicacion?paso=3">Siguiente</a>
-    {{/paso2}}
-    {{^paso2}}
-        <h2>paso3</h2>
-    {{/paso2}}
-{{/comienzo}}
+
 

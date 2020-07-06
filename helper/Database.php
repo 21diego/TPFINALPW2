@@ -54,8 +54,6 @@ class Database
     public function insertQuery($sql)
     {
         mysqli_query($this->conexion, $sql);
-        echo $this->conexion->error;
-        echo "sql: $sql";
         if ($this->conexion->affected_rows <= 0) {
             throw new InsertEntityException("No se pudo insertar entidad", $sql);
         }

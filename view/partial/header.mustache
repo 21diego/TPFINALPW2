@@ -10,11 +10,11 @@
                             {{session.usuario.apellido}}, {{session.usuario.nombre}}</span>
                         </button>
                         {{#session}}
-                            {{#admin}} {{>menuadmin}} {{/admin}}
-                            {{^admin}}
+                            {{#administrador}} {{>menuadmin}} {{/administrador}}
+                            {{^administrador}}
                                 {{#contenidista}} {{>menucontenidista}} {{/contenidista}}
                                 {{^contenidista}} {{>menuuser}} {{/contenidista}}
-                            {{/admin}}
+                            {{/administrador}}
                         {{/session}}
 
                 </li>

@@ -12,6 +12,21 @@ class Publicacion {
     private $adminPublicador;
     private $contenidistaEditor;
     private $editorial;
+    private $estado;
+
+    /**
+     * @return mixed
+     */
+    public function getEstado() {
+        return $this->estado;
+    }
+
+    /**
+     * @param mixed $estado
+     */
+    public function setEstado($estado) {
+        $this->estado = $estado;
+    }
 
     /**
      * @return mixed

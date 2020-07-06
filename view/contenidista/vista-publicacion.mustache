@@ -1,14 +1,43 @@
 <div class="container-fluid">
-    <h1>Vista Previa de Publicacion: {{nombre}}</h1>
 
-    {{#portada}}
-        <h3>{{portada}}</h3>
-    {{/portada}}
-    {{#keys}}
-        <h5>{{.}}</h5>
-        {{#secciones }}
-            <h2>notica</h2>
-        {{/secciones}}
-    {{/keys}}
+
+    <h1>Vista Previa de Publicacion: {{publicacion.nombre}}</h1>
+
+    {{#publicacion.portada}}
+        <img src="/resources/{{publicacion.portada}}" width="250px" alt="portada de {{publicacion.nombre}}">
+    {{/publicacion.portada}}
+    {{#publicacion.editorial}}
+        <h3>Editorial: {{publicacion.editorial}}</h3>
+    {{/publicacion.editorial}}
+    {{#publicacion.secciones}}
+        <section>
+            <h4>{{seccion}}</h4>
+            {{#noticias}}
+                <div id="{{id}}">
+                    Titulo: {{titulo}}
+                    <a href ="/noticia/PrevisualizarNoticia?idnoticia={{id}}" class="btn-sm btn-danger">
+                    <i class="fa fa-times-circle" style="color:white;font-size:1em">Previsualizar</i></a>
+                </div>
+            {{/noticias}}
+        </section>
+    {{/publicacion.secciones}}
+    <div class="card" style="width: 18rem;">
+        <div class="card-header">
+            Acciones
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+                <a class="btn-sm btn-info" href="editarPortada">Editar portada/titulo</a>
+            </li>
+            <li class="list-group-item">
+                <a class="btn-sm btn-success"
+                   href="verNoticias?ideditorial={{publicacion.editorial}}&publicacion={{publicacion.idpublicacion}}">
+                Agregar una noticia</a>
+            </li>
+            <li class="list-group-item">
+                <a class="btn-sm btn-danger" href="enviarAProduccion?idpublicacion={{publicacion.idpublicacion}}">Enviar a Produccion</a>
+            </li>
+        </ul>
+    </div>
 
 </div>
