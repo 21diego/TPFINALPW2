@@ -9,7 +9,7 @@ class NoticiaController{
     private $noticia;
     private $seccion;
 
-    /**
+    /*
      * NoticiaController constructor.
      * @param Renderer $renderer
      * @param NoticiaDAO $noticia

@@ -63,8 +63,10 @@ class ModuleInitializer
     {
         include_once("controller/DashboardController.php");
         include_once("dao/UsuarioDAO.php");
+        include_once ("dao/PublicacionDAO.php");
 
-        return new DashboardController($this->renderer);
+        $publicacionDAO = new PublicacionDAO($this->database);
+        return new DashboardController($this->renderer, $publicacionDAO);
     }
 
     public function createLogoutController() {
@@ -112,6 +114,18 @@ class ModuleInitializer
         $publicacionDAO = new PublicacionDAO($this->database);
         $contenidistaDAO = new ContenidistaDAO($this->database);
         return new PublicacionController($this->renderer,$publicacionDAO,$contenidistaDAO);
+    }
+
+    public function createSuscripcionController(){
+        include_once ("controller/SuscripcionController.php");
+        include_once ("dao/SuscripcionDAO.php");
+        include_once ("dao/UsuarioDAO.php");
+
+        $suscripcionDAO = new SuscripcionDAO($this->database);
+
+        $usuarioDAO = new UsuarioDAO($this->database);
+
+        return new SuscripcionController($this->renderer, $suscripcionDAO, $usuarioDAO);
     }
 
 }

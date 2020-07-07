@@ -156,11 +156,24 @@ INSERT INTO `seccion` (`idseccion`, `nombre`) VALUES
 --
 
 CREATE TABLE `suscripcion` (
-  `idsuscripcion` int(11) NOT NULL,
-  `nombre` varchar(45) NOT NULL,
-  `valor` double NOT NULL,
-  `fechaFin` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+                               `idsuscripcion` int(11) NOT NULL,
+                               `nombre` varchar(45) NOT NULL,
+                               `valor` double NOT NULL,
+                               `dias` int NOT NULL
+);
+create table 'se_suscribe'(
+                              'codigo' int(11) not null,
+                              'id_suscripcion' int(11)not null,
+                              'id_usuario' int(11)not null ,
+                              'id_editorial' int(11)not null,
+                              'fecha_fin' datetime not null,
+)
+ALTER TABLE `se_suscribe`
+    ADD PRIMARY KEY (codigo),
+    MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT,
+    ADD CONSTRAINT `suscripcion` FOREIGN KEY (`id_suscripcion`) REFERENCES `suscripcion` (`idsuscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `usuarioSuscripcion` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `editorialSuscripcion` FOREIGN KEY (`id_editorial`) REFERENCES `editorial` (`ideditorial`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- --------------------------------------------------------
 

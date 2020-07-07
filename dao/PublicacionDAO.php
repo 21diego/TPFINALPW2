@@ -13,6 +13,13 @@ class PublicacionDAO {
         $this->conexion = $conexion;
     }
 
+    public function getPublicaciones(){
+        return $this->conexion->query(
+            "select p.*, e.razonsocial from publicacion p
+                    join editorial e on p.editorial = e.ideditorial"
+        );
+    }
+
     public function getPublicacionById($id){
         return $this->conexion->query("select p.nombre,p.editorial,p.portada,s.nombre as seccion,n.titulo
                                     from publicacion p
