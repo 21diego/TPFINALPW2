@@ -1,43 +1,98 @@
+<style>
+    #actions{
+        position: fixed;
+        top: 25%;
+        right: 2em;
+    }
+</style>
+
 <div class="container-fluid">
 
 
-    <h1>Vista Previa de Publicacion: {{publicacion.nombre}}</h1>
+    <h2 class="m-3 text-center">Vista Previa de la publicacion </h2>
 
-    {{#publicacion.portada}}
-        <img src="/resources/{{publicacion.portada}}" width="250px" alt="portada de {{publicacion.nombre}}">
-    {{/publicacion.portada}}
-    {{#publicacion.editorial}}
-        <h3>Editorial: {{publicacion.editorial}}</h3>
-    {{/publicacion.editorial}}
-    {{#publicacion.secciones}}
-        <section>
-            <h4>{{seccion}}</h4>
-            {{#noticias}}
-                <div id="{{id}}">
-                    Titulo: {{titulo}}
-                    <a href ="/noticia/PrevisualizarNoticia?idnoticia={{id}}" class="btn-sm btn-danger">
-                    <i class="fa fa-times-circle" style="color:white;font-size:1em">Previsualizar</i></a>
-                </div>
-            {{/noticias}}
-        </section>
-    {{/publicacion.secciones}}
-    <div class="card" style="width: 18rem;">
-        <div class="card-header">
-            Acciones
+    <div class="d-flex">
+        <div id="datos" class="col-3">
+            <h3>Datos Tecnicos</h3>
+            <table class="table">
+                <tr>
+                    <td>Titulo:</td>
+                    <td>{{publicacion.nombre}}</td>
+                </tr>
+                <tr>
+                    <td>Editorial:</td>
+                    <td>{{publicacion.razonsocial}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" class="text-center">Portada</td>
+                </tr>
+                <tr>
+                   <td colspan="2" class="text-center">
+                       {{#publicacion.portada}}
+                           <img src="/resources/{{publicacion.portada}}" width="250px" alt="portada de {{publicacion.nombre}}">
+                       {{/publicacion.portada}}
+                   </td>
+                </tr>
+            </table>
         </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-                <a class="btn-sm btn-info" href="editarPortada">Editar portada/titulo</a>
-            </li>
-            <li class="list-group-item">
-                <a class="btn-sm btn-success"
+        <div id="publicacion" class="col-6">
+            <h5>Lista de noticias</h5>
+            <ul>
+            {{#publicacion.secciones}}
+                <li>
+                    <h5>Seccion: {{seccion}}</h5>
+                    {{#noticias}}
+                        <div id="{{id}}">
+                            <p>Titulo: {{titulo}}
+                            <span class="float-right">
+                                <a href ="/noticia/PrevisualizarNoticia?idnoticia={{id}}&publicacion={{publicacion.idpublicacion}}"
+                                    class="btn-sm btn-danger ">
+                                    <i class="fa fa-times-circle" style="color:white;font-size:1em">Previsualizar</i>
+                                </a>
+                            </span>
+                            </p>
+                        </div>
+                    {{/noticias}}
+                </li>
+            {{/publicacion.secciones}}
+            </ul>
+            {{^publicacion.secciones}}
+                No hay noticias cargadas
+            {{/publicacion.secciones}}
+        </div>
+
+    </div>
+
+
+    <div id="actions" class="btn-group-vertical" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-secondary" disabled>
+            Acciones
+        </button>
+        {{#administrador}}
+            <button type="button" class="btn btn-danger">
+                <a href ="/admin/rechazarPublicacion?idpublicacion={{publicacion.idpublicacion}}" class="btn-sm btn-danger">
+                <i class="fa fa-times-circle" style="color:white;font-size:1em"> Rechazar</i></a>
+            </button>
+            <button type="button" class="btn btn-success">
+                <a href ="/admin/aceptarPublicacion?idpublicacion={{publicacion.idpublicacion}}" class="btn-sm btn-success">
+                <i class="fa fa-check-circle" style="color:white;font-size:1em"> Aceptar</i></a>
+            </button>
+        {{/administrador}}
+        {{^administrador}}
+            <button type="button" class="btn btn-info">
+                <a class="btn btn-info" href="CrearPublicacion?idpublicacion={{publicacion.idpublicacion}}">Editar portada/titulo</a>
+            </button>
+            <button type="button" class="btn btn-success">
+                <a class="btn btn-success"
                    href="verNoticias?ideditorial={{publicacion.editorial}}&publicacion={{publicacion.idpublicacion}}">
                 Agregar una noticia</a>
-            </li>
-            <li class="list-group-item">
-                <a class="btn-sm btn-danger" href="enviarAProduccion?idpublicacion={{publicacion.idpublicacion}}">Enviar a Produccion</a>
-            </li>
-        </ul>
+            </button>
+            <button type="button" class="btn btn-danger">
+                <a class="btn btn-danger"
+                   href="enviarAProduccion?idpublicacion={{publicacion.idpublicacion}}">Enviar a Produccion</a>
+            </button>
+        {{/administrador}}
+
     </div>
 
 </div>

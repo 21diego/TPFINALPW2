@@ -77,6 +77,15 @@ class NoticiaDAO {
                                     where idnoticia = '$idnoticia'");
     }
 
+    public function deleteNoticiaFromPublicacion($idnoticia){
+        $estado = EstadoDesarrollo::EnProduccion;
+        $this->conexion
+                ->updateQuery("update noticia
+                                    set publicacion = NULL
+                                    ,estado = '$estado'
+                                    where idnoticia = '$idnoticia'");
+    }
+
     public function updateNoticia($noticia){
         $idnoticia = $noticia["idnoticia"];
         $titulo = $noticia['titulo'];

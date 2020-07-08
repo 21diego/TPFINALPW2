@@ -1,24 +1,27 @@
 <?php
 
-
+require_once "helper/Library.php";
 
  class AdminController {
     private $renderer;
     private $usuarioDAO;
     private $contenidistaDAO;
+    private $publicacionDAO;
 
      /**
       * ContenidistaController constructor.
       * @param Renderer $renderer
       * @param UsuarioDAO $usuarioDAO
       * @param ContenidistaDAO $contenidistaDAO
+      * @param PublicacionDAO $publicacionDAO
       */
 
-     public function __construct($renderer, $contenidistaDAO, $usuarioDAO)
+     public function __construct($renderer, $contenidistaDAO, $usuarioDAO, $publicacionDAO)
      {
          $this->renderer= $renderer;
          $this->usuarioDAO=$usuarioDAO;
          $this->contenidistaDAO=$contenidistaDAO;
+         $this->publicacionDAO=$publicacionDAO;
      }
 
      public function getRechazarVerificacion(){
@@ -36,7 +39,8 @@
 
                 $this->contenidistaDAO->deleteContenidista($contenidista["idcontenidista"]);
 
-                return $this->getPendientes();
+                header('Location: /admin/usuariosPendientes');
+                exit();
 
             }catch (EntityNotFoundException $exEN){
                 $data = array("error" => "No existe un usuario con es Id");
@@ -59,7 +63,8 @@
 
              $this->usuarioDAO->updateUsuario($usuario);
 
-             return $this->getPendientes();
+             header('Location: /admin/usuariosPendientes');
+             exit();
 
          }catch (EntityNotFoundException $exEN){
              $this->renderer->render("", array(
@@ -71,17 +76,50 @@
              ));
          }
      }
-     public function getPendientes(){
+     public function getUsuariosPendientes(){
          $usuarios = $this->usuarioDAO->getUsuariosPendiente();
          if(count($usuarios) == 0){
              $data = array("listaVacia" => "no hay usuarios pendientes");
-             $vista = "view/lista-pendiente.mustache";
          }else {
              $keys = array_keys($usuarios[0]);
              $data = array("usuarios" => $usuarios, "keys" => $keys);
-             $vista = "view/lista-pendiente.mustache";
          }
-         $this->renderer->render($vista,$data);
+         $this->renderer->render("view/admin/lista-pendiente.mustache",$data);
+     }
+
+     public function getAceptarPublicacion(){
+         $idpublicacion = $_GET['idpublicacion'];
+         try{
+             $this->publicacionDAO->aprobar($idpublicacion);
+             header('Location: /admin/publicacionesPendientes');
+             exit();
+         }
+         catch (Exception $ex){
+
+         }
+     }
+
+     public function getRechazarPublicacion(){
+         $idpublicacion = $_GET['idpublicacion'];
+         try{
+             $this->publicacionDAO->rechazar($idpublicacion);
+             header('Location: /admin/publicacionesPendientes');
+             exit();
+         }
+         catch (Exception $ex){
+
+         }
+     }
+
+     public function getPublicacionesPendientes(){
+         $publicaciones = $this->publicacionDAO->getPublicacionesPendiente();
+         if(count($publicaciones) == 0){
+             $data = array("listaVacia" => "no hay publicaciones pendientes");
+         }else {
+             $keys = array_keys($publicaciones[0]);
+             $data = array("publicaciones" => $publicaciones, "keys" => $keys);
+         }
+         $this->renderer->render("view/admin/publicacionesPendientes.mustache",$data);
      }
 
  }
