@@ -27,6 +27,12 @@ class Library {
         }
     }
 
+    public static function getTodayArg(){
+        $today = new DateTime("now");
+        $today->setTimezone(new DateTimeZone("America/Argentina/Buenos_Aires"));
+        return $today;
+    }
+
     public static function deleteImage($source){
         return unlink($source);
     }

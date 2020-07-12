@@ -1,0 +1,36 @@
+<div class="card-body">
+    {{#idpublicacion}}
+    <form action="ValidarForumularios?idpublicacion={{idpublicacion}}" method="post" enctype="multipart/form-data">
+     {{/idpublicacion}}
+    {{^idpublicacion}}
+    <form action="ValidarForumulario?ideditorial={{ideditorial}}&idsuscripcion={{idsuscripcion}}" method="post" enctype="multipart/form-data">
+    {{/idpublicacion}}
+    <fieldset>
+        <div class="form-group">
+            <label for="nroTarjeta">Nro. Tarjeta: </label>
+            <input type="number" name="nroTarjeta" id="nroTarjeta" class="form-control" required>
+            {{#errorNroTarjeta}}<p>{{errorNroTarjeta}}</p>{{/errorNroTarjeta}}
+        </div>
+        <div class="form-group">
+            <label for="nombre">Nombre (tal cual aparece en la tarjeta):  </label>
+            <input type="text" name="nombre" id="nombre" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="apellido">Apellido (tal cual aparece en la tarjeta):  </label>
+            <input type="text" name="apellido" id="apellido" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="codigo">Código (código que aparece en el dorsal de la tarjeta) : </label>
+            <input type="number" name="codigo" id="codigo" class="form-control" required>
+            {{#errorCodigo}}<p>{{errorCodigo}}</p>{{/errorCodigo}}
+        </div>
+        <div class="form-group">
+            <label for="dni">DNI: </label>
+            <input type="number" name="dni" id="dni" class="form-control" required>
+            {{#errorDni}}<p>{{errorDni}}</p>{{/errorDni}}
+        </div>
+        <button type="submit" class="btn btn-success">Confirmar</button>
+        <button type="reset" class="btn btn-danger">Limpiar campos</button>
+    </fieldset>
+    </form>
+</div>

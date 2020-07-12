@@ -26,25 +26,21 @@ public function getSuscripcionById($idsuscripcion){
  public function suscribirse($idusuario, $idsuscripcion, $ideditorial){
     $suscripcion = $this->getSuscripcionById($idsuscripcion);
     if(!empty($suscripcion)){
-        $hoy = getdate();
-        $d= $hoy["mday"];
-        $m = $hoy["month"];
-        $y = $hoy["year"];
-        if($suscripcion["meses"] != 0){
-            $m += $suscripcion["meses"];
-            $date = $y."/".$m."/".$d;
-            try{
+            try {
+               $today = Library::getTodayArg();
+                $dateInicio = $today->format('Y/m/d H:i:s');
+                $months = intval($suscripcion["meses"]);
+                $today->modify("+".$months." months");
+                $dateFin = $today->format('Y/m/d H:i:s');
                 $this
                     ->conexion
-                    ->insertQuery("insert into se_suscribe(id_suscripcion,id_usuario,id_editorial,fechaFin)
-                         values ('$idsuscripcion','$idusuario','$ideditorial','$date')");
-            }
-            catch (Exception $ex){
+                    ->insertQuery("insert into se_suscribe(id_suscripcion,id_usuario,id_editorial,fechaFin,fechaInicio)
+                         values ('$idsuscripcion','$idusuario','$ideditorial','$dateFin','$dateInicio')");
+            } catch (Exception $ex) {
 
             }
         }
     }
-}
 
 public function getSuscripcionesByUsuario($idusuario){
         $suscriciones = $this->conexion->query(

@@ -120,12 +120,33 @@ class ModuleInitializer
         include_once ("controller/SuscripcionController.php");
         include_once ("dao/SuscripcionDAO.php");
         include_once ("dao/UsuarioDAO.php");
+        include_once ("dao/PublicacionDAO.php");
+        include_once ("dao/CompraDAO.php");
+
+        $publicacionDAO= new PublicacionDAO($this->database);
 
         $suscripcionDAO = new SuscripcionDAO($this->database);
 
         $usuarioDAO = new UsuarioDAO($this->database);
 
-        return new SuscripcionController($this->renderer, $suscripcionDAO, $usuarioDAO);
+        $compraDAO = new CompraDAO($this->database);
+
+        return new SuscripcionController($this->renderer, $suscripcionDAO, $usuarioDAO, $publicacionDAO, $compraDAO);
+    }
+
+    public function createCompraController(){
+        include_once ("controller/CompraController.php");
+        include_once ("dao/CompraDAO.php");
+
+        $compraDao = new CompraDAO($this->database);
+
+        return new CompraController($this->renderer, $compraDao);
+    }
+
+    public function createPagoController(){
+        include_once ("controller/PagoController.php");
+
+        return new PagoController($this->renderer);
     }
 
 }

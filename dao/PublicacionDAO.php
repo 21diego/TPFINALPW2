@@ -29,6 +29,10 @@ class PublicacionDAO {
                                     order by s.nombre");
     }
 
+    public function getpublicacionId($id){
+        return $this->conexion->querySingleRow("select * from publicacion where idpublicacion = '$id'");
+    }
+
     public function getPublicacionByEditorial($idEditorial){
 
     }
