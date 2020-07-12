@@ -90,10 +90,12 @@ class ModuleInitializer
         include_once ("controller/AdminController.php");
         include_once ("dao/ContenidistaDAO.php");
         include_once ("dao/UsuarioDAO.php");
+        include_once ("dao/PublicacionDAO.php");
 
         $contenidistaDAO = new ContenidistaDAO($this->database);
         $usuarioDAO = new UsuarioDAO(($this->database));
-        return new AdminController($this->renderer,$contenidistaDAO,$usuarioDAO);
+        $publicacionesDAO = new PublicacionDAO($this->database);
+        return new AdminController($this->renderer,$contenidistaDAO,$usuarioDAO,$publicacionesDAO);
     }
 
     public function createNoticiaController(){
@@ -110,10 +112,12 @@ class ModuleInitializer
         include_once ("controller/PublicacionController.php");
         include_once ("dao/PublicacionDAO.php");
         include_once ("dao/ContenidistaDAO.php");
+        include_once ("dao/NoticiaDAO.php");
 
         $publicacionDAO = new PublicacionDAO($this->database);
         $contenidistaDAO = new ContenidistaDAO($this->database);
-        return new PublicacionController($this->renderer,$publicacionDAO,$contenidistaDAO);
+        $noticiaDAO = new NoticiaDAO($this->database);
+        return new PublicacionController($this->renderer,$publicacionDAO,$contenidistaDAO,$noticiaDAO);
     }
 
     public function createSuscripcionController(){

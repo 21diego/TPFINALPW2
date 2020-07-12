@@ -166,8 +166,8 @@ create table 'se_suscribe'(
                               'id_suscripcion' int(11)not null,
                               'id_usuario' int(11)not null ,
                               'id_editorial' int(11)not null,
-                              'fecha_fin' datetime not null,
-)
+                              'fecha_fin' datetime not null
+);
 ALTER TABLE `se_suscribe`
     ADD PRIMARY KEY (codigo),
     MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT,

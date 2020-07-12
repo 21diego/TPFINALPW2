@@ -12,7 +12,30 @@
         <div>
             <p>{{noticia.cuerpo}}</p>
         </div>
-        <div><button><a href="CrearNoticia?idnoticia={{noticia.idnoticia}}">Editar</a></button></div>
-        <div><button><a href="EnviarAProduccion?idnoticia={{noticia.idnoticia}}">Enviar a Produccion</a></button></div>
+    {{#contenidista}}
+        {{#editorial}}
+            <div>
+                <a href="enviarAEdicion?idnoticia={{noticia.idnoticia}}" class="btn btn-danger">Enviar a Edicion</a>
+                <a href="/publicacion/agregarNoticia?idnoticia={{noticia.idnoticia}}&publicacion={{publicacion}}"
+                class="btn btn-success">Agregar Noticia</a>
+            </div>
+        {{/editorial}}
+        {{^editorial}}
+            {{#publicacion}}
+                <div>
+                    <a href="/publicacion/quitarNoticia?idnoticia={{noticia.idnoticia}}&publicacion={{publicacion}}"
+                    class="btn btn-danger">Quitar Noticia</a></button>
+                </div>
+            {{/publicacion}}
+            {{^publicacion}}
+                <div>
+                    <a href="CrearNoticia?idnoticia={{noticia.idnoticia}}" class="btn btn-info">Editar</a></button>
+                    <a href="EnviarAProduccion?idnoticia={{noticia.idnoticia}}" class="btn btn-danger">Enviar a Produccion</a></button>
+                </div>
+            {{/publicacion}}
+        {{/editorial}}
+    {{/contenidista}}
+
+
     {{/noticiaNotFound}}
 </div>

@@ -43,4 +43,8 @@ class Library {
     public static function existeSesion() {
         return !empty($_SESSION);
     }
+
+    public static function prettyArray($array){
+        print("<pre>".print_r($array,true)."</pre>");
+    }
 }

@@ -1,4 +1,4 @@
-{{#comienzo}}
+
     <div class="d-flex justify-content-center py-3">
 
         <div style="width: 40rem;" {{#error}}class="card border-danger"{{/error}}{{^error}}class="card"{{/error}}>
@@ -6,19 +6,41 @@
                 Crea una Publicacion!
             </div>
             <div class="card-body">
+                {{#publicacion}}
+                <form action="editarPublicacion" method="post" enctype="multipart/form-data">
+                    <input type="hidden" value="{{publicacion.idpublicacion}}" name="idpublicacion">
+                {{/publicacion}}
+                {{^publicacion}}
                 <form action="crearPublicacion" method="post" enctype="multipart/form-data">
+                {{/publicacion}}
+
                     <fieldset>
                         <div class="form-group">
                             <label for="nombre">Agregue un titulo a la publicacion:</label>
-                            <input type="text" id="nombre" name="nombre" class="form-control" value="" autocomplete="off" required>
+                            <input type="text" id="nombre" name="nombre" class="form-control" value="{{publicacion.nombre}}" autocomplete="off" required>
                         </div>
-                        <div class="form-group">
-                            <label for="portada">Agregue una imagen para la portada:</label>
-                            <input type="file" id="portada" name="portada"
-                                   class="form-control" autocomplete="off" value="">
-                        </div>
+                        {{#publicacion}}
+                            <div class="form-group">
+                                <label for="portada">Cambiar portada:</label>
+                                <input type="file" id="portada" name="portada"
+                                       class="form-control" autocomplete="off" value="">
+                            </div>
+                        {{/publicacion}}
+                        {{^publicacion}}
+                            <div class="form-group">
+                                <label for="portada">Agregue una imagen para la portada:</label>
+                                <input type="file" id="portada" name="portada"
+                                       class="form-control" autocomplete="off" value="">
+                            </div>
+                        {{/publicacion}}
                         <button type="reset" class="btn btn-danger">Limpiar campos</button>
-                        <button type="submit" class="btn btn-success">Siguiente</button>
+                        {{#publicacion}}
+                            <button type="submit" class="btn btn-success">Editar</button>
+                        {{/publicacion}}
+                        {{^publicacion}}
+                            <button type="submit" class="btn btn-success">Crear!</button>
+                        {{/publicacion}}
+
                     </fieldset>
                 </form>
             </div>
@@ -32,14 +54,5 @@
 
         </div>
     </div>
-{{/comienzo}}
-{{^comienzo}}
-    {{#paso2}}
-        <h2>paso2</h2>
-        <a href="crearPublicacion?paso=3">Siguiente</a>
-    {{/paso2}}
-    {{^paso2}}
-        <h2>paso3</h2>
-    {{/paso2}}
-{{/comienzo}}
+
 
