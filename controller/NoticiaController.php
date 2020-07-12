@@ -2,6 +2,7 @@
 
 include_once "model/Noticia.php";
 include_once "model/EstadoDesarrollo.php";
+include_once "helper/Library.php";
 
 class NoticiaController{
 
@@ -108,8 +109,10 @@ class NoticiaController{
             $source = $_SERVER["DOCUMENT_ROOT"] . '/resources/';
             $editorial = isset($_GET['editorial'])?$_GET['editorial']:false;
             $publicacion = isset($_GET['publicacion'])?$_GET['publicacion']:false;
+            $agregado = isset($_GET['agregado'])?$_GET['agregado']:false;
             $data = array("noticia"=> $noticia, "source" => $source,
-                    "editorial" => $editorial, "publicacion"=>$publicacion);
+                    "editorial" => $editorial, "publicacion"=>$publicacion,
+                    "agregado"=>$agregado);
         }
         $this->renderer->render("view/contenidista/previsualizarNoticia.mustache", $data);
     }

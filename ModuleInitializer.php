@@ -88,10 +88,12 @@ class ModuleInitializer
         include_once ("controller/AdminController.php");
         include_once ("dao/ContenidistaDAO.php");
         include_once ("dao/UsuarioDAO.php");
+        include_once ("dao/PublicacionDAO.php");
 
         $contenidistaDAO = new ContenidistaDAO($this->database);
         $usuarioDAO = new UsuarioDAO(($this->database));
-        return new AdminController($this->renderer,$contenidistaDAO,$usuarioDAO);
+        $publicacionesDAO = new PublicacionDAO($this->database);
+        return new AdminController($this->renderer,$contenidistaDAO,$usuarioDAO,$publicacionesDAO);
     }
 
     public function createNoticiaController(){

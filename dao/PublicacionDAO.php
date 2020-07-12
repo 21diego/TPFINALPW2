@@ -1,5 +1,6 @@
 <?php
 
+require_once "model/EstadoDesarrollo.php";
 
 class PublicacionDAO {
 
@@ -13,22 +14,33 @@ class PublicacionDAO {
         $this->conexion = $conexion;
     }
 
+    public function getPublicacionEditableById($id){
+        return $this
+                ->conexion
+                ->querySingleRow("select p.idpublicacion, p.nombre, p.portada
+                            from publicacion p
+                            where p.idpublicacion = '$id'");
+    }
+
     public function getPublicacionById($id){
-        $publicacionraw = $this->conexion->query("select p.idpublicacion,p.nombre,p.editorial,p.portada,s.nombre as seccion,n.idnoticia,n.titulo
+        $publicacionraw = $this->conexion->query("select p.idpublicacion,p.nombre,p.editorial,e.razonsocial,p.portada,s.nombre as seccion,n.idnoticia,n.titulo
                                     from publicacion p
                                     left join noticia n on n.publicacion = p.idpublicacion
                                     left join seccion s on n.seccion = s.idseccion
+                                    left join editorial e on p.editorial = e.ideditorial
                                     where idpublicacion = '$id'
                                     order by s.nombre");
 
         return $this->getPublicacion($publicacionraw);
     }
 
+
     public function getPublicacion($raw){
         $publicacion = array(
                 "idpublicacion"=>$raw[0]['idpublicacion'],
                 "nombre"=> $raw[0]['nombre'],
                 "editorial"=> $raw[0]['editorial'],
+                "razonsocial" => $raw[0]['razonsocial'],
                 "portada"=> $raw[0]['portada']
         );
 
@@ -101,8 +113,63 @@ class PublicacionDAO {
         return $id;
     }
 
-    public function updatePublicacion(){
+    public function updatePublicacion($publicacion){
+        $id = $publicacion['idpublicacion'];
+        $nombre = $publicacion['nombre'];
+        $portada = $publicacion['portada'];
+        $this
+                ->conexion
+                ->updateQuery("update publicacion
+                            set nombre = '$nombre'
+                            , portada = '$portada'
+                             where idpublicacion = '$id'");
+    }
 
+    public function enviarAProduccion($idpublicacion){
+        $estado = EstadoDesarrollo::EnProduccion;
+        $this->conexion
+                ->updateQuery("update publicacion
+                             set estado = '$estado'
+                             where idpublicacion = '$idpublicacion'");
+    }
+
+    public function getPublicacionesPendiente(){
+        $estado = EstadoDesarrollo::EnProduccion;
+        return $this
+                ->conexion
+                ->query("select p.idpublicacion, p.nombre, p.numero, 
+                                p.valor, e.razonsocial as editorial, p.estado
+                            from publicacion p
+                            join editorial e on e.ideditorial = p.editorial
+                            where estado = '$estado'");
+    }
+
+
+    public function aprobar($idpublicacion){
+        $estado = EstadoDesarrollo::Publicado;
+        $this->conexion
+                ->updateQuery("update publicacion
+                             set estado = '$estado'
+                             where idpublicacion = '$idpublicacion'");
+    }
+
+    public function rechazar($idpublicacion){
+        $estado = EstadoDesarrollo::EnEdicion;
+        $this->conexion
+                ->updateQuery("update publicacion
+                             set estado = '$estado'
+                             where idpublicacion = '$idpublicacion'");
+    }
+
+    public function getPublicacionesAprobadas($usuario){
+        $estado = EstadoDesarrollo::Publicado;
+        return $this
+                ->conexion
+                ->query("select p.idpublicacion, p.portada, p.nombre, p.numero, 
+                                p.valor, e.razonsocial as editorial, p.estado
+                            from publicacion p
+                            join editorial e on e.ideditorial = p.editorial
+                            where estado = '$estado'");
     }
 
 

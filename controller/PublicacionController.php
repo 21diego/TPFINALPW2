@@ -26,7 +26,14 @@ class PublicacionController {
     }
 
     public function getCrearPublicacion(){
-        $data = array("comienzo" =>"start");
+        $idpublicacion = isset($_GET["idpublicacion"]) ? $_GET["idpublicacion"] : false;
+        if($idpublicacion != false){
+            $publicacion = $this->publicacion->getPublicacionEditableById($idpublicacion);
+            $data = array("publicacion" => $publicacion);
+        }
+        else{
+            $data = array();
+        }
         $this->renderer->render("view/contenidista/crear-publicacion.mustache",$data);
     }
 
@@ -53,8 +60,29 @@ class PublicacionController {
             $data = array("error" => $ex->getMessage());
             $this->renderer->render("view/contenidista/vista-publicacion.mustache",$data);
         }
+    }
 
+    public function postEditarPublicacion(){
+        $imagen = $_FILES["image"];
+        $idpublicacion = $_POST["idpublicacion"];
+        $publicacion = $this->publicacion->getPublicacionEditableById($idpublicacion);
 
+        if($imagen["name"] != ""){
+            $source = $_SERVER["DOCUMENT_ROOT"] . '/resources/';
+
+            try{
+                Library::deleteImage($source.$publicacion['portada']);
+                $name = Library::uploadImage($imagen,$source);
+            }catch(Exception $e){
+                $name = $publicacion["portada"];
+            }
+            $publicacion["portada"] = $name;
+        }
+
+        $publicacion["nombre"] = $_POST["nombre"];
+
+        $this->publicacion->updatePublicacion($publicacion);
+        header('Location: /publicacion/PrevisualizarPublicacion?idpublicacion='."$idpublicacion");
     }
 
     public function getPublicacionesEnEdicion(){
@@ -99,10 +127,46 @@ class PublicacionController {
         $idnoticia = $_GET['idnoticia'];
         $publicacion = $_GET['publicacion'];
         $this->noticia->addNoticiaToPublicacion($idnoticia,$publicacion);
-        $this->getPrevisualizarPublicacion($publicacion);
+        header('Location: /publicacion/PrevisualizarPublicacion?idpublicacion='."$publicacion");
+        exit();
 
     }
 
+    public function getQuitarNoticia(){
+        $idnoticia = $_GET['idnoticia'];
+        $publicacion = $_GET['publicacion'];
+        $this->noticia->deleteNoticiaFromPublicacion($idnoticia);
+        header('Location: /publicacion/PrevisualizarPublicacion?idpublicacion='."$publicacion");
+        exit();
+    }
 
+    public function getEnviarAProduccion(){
+        $idpublicacion = $_GET['idpublicacion'];
+        try{
+            $this->publicacion->enviarAProduccion($idpublicacion);
+            header('Location: /dashboard');
+            exit();
+        }
+        catch (EntityNotFoundException $ex){
+            $data = array("error" => "error al actualizar la publicacion");
+            $this->renderer->render("view/dashboard.mustache", $data);
+        }
+    }
 
+    public function getPublicacionesAprobadas(){
+        $usuario = $_SESSION['usuario']['idUsuario'];
+        $publicaciones =  $this->publicacion->getPublicacionesAprobadas($usuario);
+
+        if(count($publicaciones) == 0){
+            $data = array("listaVacia" => "no hay publicaciones aprobadas");
+        }
+        else{
+            $keys = array_keys($publicaciones[0]);
+            $data = array("publicaciones" => $publicaciones, "keys" => $keys);
+        }
+
+        $this->renderer->render("view/contenidista/publicacionesAprobadas.mustache", $data);
+
+    }
 }
+

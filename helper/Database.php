@@ -30,7 +30,6 @@ class Database
     public function query($sql)
     {
         $result = mysqli_query($this->conexion, $sql);
-
         return mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     }

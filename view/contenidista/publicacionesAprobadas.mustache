@@ -1,0 +1,10 @@
+<div class="d-flex justify-content-center py-3">
+    {{#listaVacia}}
+        <h2>{{listaVacia}}</h2>
+    {{/listaVacia}}
+    {{^listaVacia}}
+        {{#publicaciones}}
+            {{>PublicacionBox}}
+        {{/publicaciones}}
+    {{/listaVacia}}
+</div>
