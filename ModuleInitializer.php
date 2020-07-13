@@ -154,11 +154,12 @@ class ModuleInitializer
     }
 
     public function createReporteController(){
-        include_once ("controller/ReporteController.php");
+        include_once("controller/ReporteController.php");
         include_once ("model/ReporteModel.php");
 
         $reporteModel = new ReporteModel($this->database);
-        return new ReporteController($this->renderer,$reporteModel);
+
+        return new ReporteController($this->renderer, $reporteModel);
     }
 
 }
