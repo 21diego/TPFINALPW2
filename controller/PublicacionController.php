@@ -185,5 +185,6 @@ class PublicacionController {
         }
         $this->renderer->render("view/contenidista/vistaPublicacion.mustache", $data);
     }
+
 }
 

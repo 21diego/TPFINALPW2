@@ -40,10 +40,13 @@ class SuscripcionController{
                 throw new EntityNotFoundException("","");
             }
                 $this->renderer->render("view/publicacion/content.mustache", array());
+                header('Location: /publicacion/ver?idpublicacion='.$idpublicacion);
+                exit();
         }catch (EntityNotFoundException $ene){
             try {
                 $compra = $this->compra->buscarCompra($idUsuario, $idpublicacion);
-                $this->renderer->render("view/publicacion/content.mustache", array());
+                header('Location: /publicacion/ver?idpublicacion='.$idpublicacion);
+                exit();
             }catch (EntityNotFoundException $ene){
                 $suscripciones = $this->suscripcion->getSuscripciones();
                 $publicacion = $this->publicacion->getPublicacionId($idpublicacion);

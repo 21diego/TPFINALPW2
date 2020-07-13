@@ -1,11 +1,11 @@
 <div class="container-fluid">
     <h1>Bienvenido, <span class="text-danger">[{{session.usuario.rol}}]</span> {{session.usuario.mail}}</h1>
 
+    <div class="d-flex justify-content-center py-3">
         {{#publicaciones}}
-            <diV>
-            <a href ="suscripcion/Suscripciones?ideditorial={{editorial}}&idpublicacion={{idpublicacion}}">{{nombre}}</a>
-                <h6>Editorial: {{razonsocial}}</h6>
-            </diV>
+                {{>PublicacionBox}}
         {{/publicaciones}}
+    </div>
+
 </div>
 
