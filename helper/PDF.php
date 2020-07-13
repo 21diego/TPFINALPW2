@@ -3,6 +3,7 @@ require_once 'third-party/fpdf/fpdf.php';
 
 class PDF extends FPDF {
     private $title;
+    private $data;
     // Cabecera de página
     /**
      * PDF constructor.
@@ -17,15 +18,19 @@ class PDF extends FPDF {
         // Arial bold 15
         $this->SetFont('Arial','BU',20);
         // Título
-        $this->Cell(100,10,$this->title,0,0,'C');
+        $this->Cell(100,10,$this->title,0,0);
         // Salto de línea
         $this->Ln(20);
     }
 
-    function Content($reporte){
-        $mesActual = date('n');
-        $anioActual = date('Y');
-        $this->InsertRow('Recaudacion Total Suscripciones  del mes '.date('F'),'$'.$reporte->getrecaudacionTotalSuscripcionesXmes($mesActual, $anioActual));
+    function Content($reporte, $data){
+        $mes = $data['mes'];
+        $anio = $data['anio'];
+        foreach ($data['reporte'] as $dato){
+            $key = Library::prettyText($dato);
+            $query = 'get'.$dato;
+            $this->InsertRow($key,call_user_func(array($reporte,$query),$mes,$anio));
+        }
 
     }
 

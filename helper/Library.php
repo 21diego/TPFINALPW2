@@ -47,4 +47,17 @@ class Library {
     public static function prettyArray($array){
         print("<pre>".print_r($array,true)."</pre>");
     }
+
+    public static function prettyText($text){
+        $output = strtoupper($text[0]);
+        for($i=1;$i<strlen($text);$i++){
+            if(ctype_upper($text[$i])){
+                $output .= ' ' . strtolower($text[$i]);
+            }
+            else{
+                $output .= $text[$i];
+            }
+        }
+        return $output;
+    }
 }

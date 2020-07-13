@@ -64,12 +64,13 @@ class ReporteModel {
         );
     }
     public function getcantidadTotalSuscripcionesXmes($mes, $anio){
-        return $this->conexion->querySingleRow(
-                "select count(s.idsuscripcion) 
+        $cantidad = $this->conexion->querySingleRow(
+                "select count(s.idsuscripcion) as cantidad
            from se_suscribe se
            join suscripcion s on se.id_suscripcion = s.idsuscripcion
-           where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaIncio) = '$anio'"
+           where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaInicio) = '$anio'"
         );
+        return $cantidad['cantidad'];
     }
     public function getcantidadTotalSuscripcionesEntrefechas($fecha, $fecha2){
         return $this->conexion->querySingleRow(
@@ -87,12 +88,13 @@ class ReporteModel {
         );
     }
     public function getrecaudacionTotalComprasXmes($mes, $anio){
-        return $this->conexion->querySingleRow(
-                "select sum(p.valor) 
+        $total = $this->conexion->querySingleRow(
+                "select sum(p.valor) as total
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion
            where MONTH(c.fechaCompra) = '$mes' and YEAR(c.fechaCompra) = '$anio'"
         );
+        return $total['total'];
     }
     public function getrecaudacionTotalComprasEntreFechas($fecha, $fecha2){
         return $this->conexion->querySingleRow(
@@ -110,12 +112,13 @@ class ReporteModel {
         );
     }
     public function getcantidadTotalComprasXmes($mes, $anio){
-        return $this->conexion->querySingleRow(
-                "select count(p.idpublicacion) 
+        $cantidad = $this->conexion->querySingleRow(
+                "select count(p.idpublicacion) as cantidad
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion
            where MONTH(c.fechaCompra) = '$mes' and YEAR(c.fechaCompra) = '$anio'"
         );
+        return $cantidad['cantidad'];
     }
     public function getcantidadTotalComprasEntreFechas($fecha, $fecha2){
         return $this->conexion->querySingleRow(
