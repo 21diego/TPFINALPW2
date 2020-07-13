@@ -18,7 +18,7 @@ include_once ("model/Rol.php");
                     from se_suscribe se
                     join usuario u on se.id_usuario = u.idUsuario
                     join suscripcion s on se.id_suscripcion = s.idsuscripcion
-                    where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaIncio) = '$anio'"
+                    where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaInicio) = '$anio'"
         );
      }
 
@@ -47,7 +47,7 @@ include_once ("model/Rol.php");
              "select sum(s.valor) as recaudacion
                 from se_suscribe se
                 join suscripcion s on se.id_suscripcion = s.idsuscripcion
-                where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaIncio) = '$anio'"
+                where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaInicio) = '$anio'"
          );
          return $recaudacion["recaudacion"];
      }
@@ -75,7 +75,7 @@ include_once ("model/Rol.php");
              "select count(s.idsuscripcion) as cantidad 
                 from se_suscribe se
                 join suscripcion s on se.id_suscripcion = s.idsuscripcion
-                where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaIncio) = '$anio'"
+                where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaInicio) = '$anio'"
          );
          return $cantidad["cantidad"];
      }
@@ -126,12 +126,13 @@ include_once ("model/Rol.php");
          return $cantidad["cantidad"];
      }
      public function getcantidadTotalComprasXmes($mes, $anio){
-         return $this->conexion->querySingleRow(
+         $cantidad = $this->conexion->querySingleRow(
              "select count(p.idpublicacion) as cantidad
                 from compra c
                 join publicacion p on c.idpublicacion = p.idpublicacion
                 where MONTH(c.fechaCompra) = '$mes' and YEAR(c.fechaCompra) = '$anio'"
          );
+         return $cantidad["cantidad"];
      }
 
      public function getcantidadTotalComprasEntreFechas($fecha, $fecha2){

@@ -74,7 +74,7 @@ class reporteController{
         $pdf = new PDF($title);
         $pdf->AddPage();
         $pdf->SetFont('Arial', 'B', 16);
-        $pdf->Content($this->reporteModel, $data);
+        $pdf->Content($this->reporte, $data);
         $pdf->Output('i','reporte-mensual.pdf');
     }
 
