@@ -1,0 +1,25 @@
+<div>
+    <h2>Usuarios Totales: {{ut}}</h2>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script type="text/javascript">
+    window.onload = function() {
+        let ctx = document.getElementById("myChart").getContext("2d");
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: ["{{ug}}", "{{up}}"],
+                    backgroundColor:[
+                        getRandomRgb(), getRandomRgb()
+                    ],
+                }],
+                labels: [
+                    'Usuarios gratiutos',
+                    'Usuarios pagos'
+                ]
+            }
+        });
+    }
+</script>

@@ -122,5 +122,6 @@ require_once "helper/Library.php";
          $this->renderer->render("view/admin/publicacionesPendientes.mustache",$data);
      }
 
+
  }
 ?>

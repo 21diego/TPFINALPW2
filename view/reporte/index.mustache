@@ -1,0 +1,48 @@
+<button><a href="ReporteUsuarios">Reporte Usuarios</a></button>
+<div>
+    <h2>Total recaudado ${{rt}}</h2>
+    <canvas id="myChart"></canvas>
+</div>
+
+<div>
+    <h2>Cantidad total suscripciones/compras {{ct}}</h2>
+    <canvas id="myChart2"></canvas>
+</div>
+
+<script type="text/javascript">
+    window.onload = function() {
+        let ctx = document.getElementById("myChart").getContext("2d");
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: ["{{rc}}", "{{rs}}"],
+                    backgroundColor:[
+                        getRandomRgb(), getRandomRgb()
+                    ],
+                }],
+                labels: [
+                    'Compras',
+                    'Suscripciones'
+                ]
+            }
+        });
+
+        let ctx2 = document.getElementById("myChart2").getContext("2d");
+        new Chart(ctx2, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: ["{{cc}}", "{{cs}}"],
+                    backgroundColor:[
+                        getRandomRgb(),getRandomRgb()
+                    ],
+                }],
+                labels: [
+                    'Compras',
+                    'Suscripciones'
+                ]
+            }
+        });
+    }
+</script>
