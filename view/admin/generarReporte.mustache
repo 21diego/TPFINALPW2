@@ -1,0 +1,43 @@
+<div class="d-flex justify-content-center py-3">
+
+    <div style="width: 40rem;" {{#error}}class="card border-danger"{{/error}}{{^error}}class="card"{{/error}}>
+        <div class="card-header text-center">
+            Selecciona los datos para el reporte de {{mesactual}} - {{anioactual}}:
+        </div>
+        <div class="card-body">
+            <form action="generarReporteMensual" method="post">
+                <input type="hidden" name="mes" value="{{mesactual}}">
+                <input type="hidden" name="mesnro" value="{{mesactualnro}}">
+                <input type="hidden" name="anio" value="{{anioactual}}">
+            <fieldset>
+                <div class="form-group">
+                    <label for="recSuscrip">Recaudacion Total Suscripciones</label>
+                    <input type="checkbox" id="recSuscrip" name="data[]" value="recaudacionTotalSuscripcionesXmes" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="recCompras">Recaudacion Total Compras</label>
+                    <input type="checkbox" id="recCompras" name="data[]" value="recaudacionTotalComprasXmes" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cantSuscrip">Cantidad Total de Suscripciones</label>
+                    <input type="checkbox" id="cantSuscrip" name="data[]" value="cantidadTotalSuscripcionesXmes" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="cantCompras">Cantidad Total Compras</label>
+                    <input type="checkbox" id="cantCompras" name="data[]" value="cantidadTotalComprasXmes" class="form-control">
+                </div>
+                <button type="submit" class="btn btn-success">Generar Reporte</button>
+                <button type="reset" class="btn btn-danger">Limpiar campos</button>
+            </fieldset>
+        </form>
+        </div>
+        {{#error}}
+            <div class="p-2 bd-highlight">
+                <div class="alert alert-danger" role="alert">
+                    {{error}}
+                </div>
+            </div>
+        {{/error}}
+
+    </div>
+</div>

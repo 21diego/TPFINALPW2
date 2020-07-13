@@ -1,4 +1,6 @@
 <?php
+
+require_once 'helper/PDF.php';
 include_once ("model/Rol.php");
 include_once ("helper/Library.php");
 class reporteController{
@@ -52,6 +54,30 @@ class reporteController{
         $data = array("editoriales" => $editoriales);
         $this->renderer->render("view/reporte/reporte-editorial.mustache", $data);
     }
+  
+  public function getGenerarReporteMensual(){
+        $data = array(
+                "mesactual" => date('F'),
+                "mesactualnro" => date('n'),
+                "anioactual" => date('Y')
+        );
+        $this->renderer->render('view/admin/generarReporte.mustache',$data);
+
+    }
+
+    public function postGenerarReporteMensual(){
+        $mes = $_POST['mes'];
+        $mesnro = $_POST['mesnro'];
+        $anio = $_POST['anio'];
+        $data = array("mes"=>$mesnro, "anio"=>$anio, "reporte" => $_POST['data']);
+        $title = "Reporte Mensual de Infonete [$mes - $anio]";
+        $pdf = new PDF($title);
+        $pdf->AddPage();
+        $pdf->SetFont('Arial', 'B', 16);
+        $pdf->Content($this->reporteModel, $data);
+        $pdf->Output('i','reporte-mensual.pdf');
+    }
 
 }
 ?>
+
