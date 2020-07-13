@@ -2,7 +2,7 @@
     #actions{
         position: fixed;
         top: 25%;
-        right: 2em;
+        left: 2em;
     }
 </style>
 
@@ -12,30 +12,8 @@
     <h2 class="m-3 text-center">Vista Previa de la publicacion </h2>
 
     <div class="d-flex">
-        <div id="datos" class="col-3">
-            <h3>Datos Tecnicos</h3>
-            <table class="table">
-                <tr>
-                    <td>Titulo:</td>
-                    <td>{{publicacion.nombre}}</td>
-                </tr>
-                <tr>
-                    <td>Editorial:</td>
-                    <td>{{publicacion.razonsocial}}</td>
-                </tr>
-                <tr>
-                    <td colspan="2" class="text-center">Portada</td>
-                </tr>
-                <tr>
-                   <td colspan="2" class="text-center">
-                       {{#publicacion.portada}}
-                           <img src="/resources/{{publicacion.portada}}" width="250px" alt="portada de {{publicacion.nombre}}">
-                       {{/publicacion.portada}}
-                   </td>
-                </tr>
-            </table>
-        </div>
-        <div id="publicacion" class="col-6">
+
+        <div id="publicacion" class="col-7  offset-2">
             <h5>Lista de noticias</h5>
             <ul>
             {{#publicacion.secciones}}
@@ -59,6 +37,37 @@
             {{^publicacion.secciones}}
                 No hay noticias cargadas
             {{/publicacion.secciones}}
+        </div>
+        <div id="datos" class="col-3">
+            <div class="card">
+               <div class="card-header">
+                   <h3 class="text-center">Datos Tecnicos</h3>
+               </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <td>Titulo:</td>
+                            <td>{{publicacion.nombre}}</td>
+                        </tr>
+                        <tr>
+                            <td>Editorial:</td>
+                            <td>{{publicacion.razonsocial}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center">Portada</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="text-center">
+                                {{#publicacion.portada}}
+                                    <img src="/resources/{{publicacion.portada}}" width="250px" alt="portada de {{publicacion.nombre}}">
+                                {{/publicacion.portada}}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+
         </div>
 
     </div>

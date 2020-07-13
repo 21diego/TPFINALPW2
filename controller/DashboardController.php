@@ -19,8 +19,8 @@ class DashboardController
 
     public function getIndex()
     {
-        //$publicaciones = $this->publicacion->getPublicaciones();
-        $data = array("title" => "Dashboard", "publicaciones" => "publi");
+        $publicaciones = $this->publicacion->getPublicaciones();
+        $data = array("title" => "Dashboard", "publicaciones" => $publicaciones);
         $vista = "view/dashboard.mustache";
         $this->renderer->render($vista,$data);
     }

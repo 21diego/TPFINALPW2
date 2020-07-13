@@ -14,7 +14,15 @@ class PublicacionDAO {
         $this->conexion = $conexion;
     }
 
-
+    public function getPublicaciones(){
+        $estado = EstadoDesarrollo::Publicado;
+        return $this
+                ->conexion
+                ->query("select p.*, e.razonsocial 
+                            from publicacion p
+                            join editorial e on p.editorial = e.ideditorial
+                            where p.estado ='$estado'");
+    }
     public function getPublicacionEditableById($id){
         return $this
                 ->conexion

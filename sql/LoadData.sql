@@ -71,6 +71,15 @@ INSERT INTO `contenidista` (`idcontenidista`, `idUsuario`, `editorial`) VALUES
 
 -- --------------------------------------------------------
 --
+-- Volcado de datos para la tabla `suscripcion`
+--
+
+INSERT INTO `suscripcion` (`idsuscripcion`, `nombre`, `valor`, `meses`) VALUES
+(1, 'trimestral', 300, 3),
+(2, 'semestral', 500, 6),
+(3, 'anual', 800, 12);
+
+--
 -- Volcado de datos para la tabla `se_suscribe`
 --
 
