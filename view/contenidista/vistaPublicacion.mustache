@@ -32,8 +32,8 @@
     <div class="d-flex">
         <div id="accordion" class="col-3">
             <div class="card">
-                <div class="card-header">
-                    <button onclick="verPortada()">Portada</button>
+                <div class="card-body">
+                    <a href="#" onclick="verPortada()">Portada</a>
                 </div>
             </div>
             {{#publicacion.secciones}}
@@ -49,7 +49,11 @@
                 <div id="{{seccion}}" class="collapse" aria-labelledby="id{{seccion}}" data-parent="#accordion">
                     <div class="card-body">
                         {{#noticias}}
-                            <button onclick="muestraNoticia({{id}})">{{titulo}}</button>
+                            <div>
+                                <span>{{titulo}}</span>
+                                <button class="btn btn-sm btn-info" onclick="muestraNoticia({{id}})">Ver</button>
+                            </div>
+
                         {{/noticias}}
                     </div>
                 </div>

@@ -1,20 +1,37 @@
-<h2>Para acceder a esta publicacion debes comprarla</h2>
-<div class="d-flex justify-content-center py-3">
-    <div class="m-2">
-        <h3>{{publicacion.nombre}}</h3>
-        <h4>Numero {{publicacion.numero}}</h4>
-        <h3>${{publicacion.valor}}</h3>
-        <button><a href="../pago/PagoForm?idpublicacion={{publicacion.idpublicacion}}">Comprar ahora</a></button>
-    </div>
-</div>
-<h2>O puedes suscribirte y accederás a todo el contenido de esta editorial</h2>
-<div class="d-flex justify-content-center py-3">
-    {{#suscripciones}}
-       <div class="m-2 mb-5">
-        <h4>{{nombre}}</h4>
-        <h2>${{valor}}</h2>
-        <h5>{{meses}} Meses</h5>
-        <button><a href="../pago/PagoForm?ideditorial={{editorial}}&idsuscripcion={{idsuscripcion}}">Suscribirse</a></button>
-       </div>
-    {{/suscripciones}}
+<div class="mt-3 d-flex justify-content-center container">
+        <div class="col-4">
+            <div class="card p-3">
+                <h4 class="text-center">Para acceder a esta publicacion debes comprarla</h4>
+                <div class="d-flex justify-content-center py-3">
+                    <div class="m-2 card p-3">
+                        <h3>{{publicacion.nombre}}</h3>
+                        <h4>Numero {{publicacion.numero}}</h4>
+                        <h3 class="text-danger"><span class="float-right">${{publicacion.valor}}</span></h3>
+                        <a class="btn btn-info"
+                           href="../pago/PagoForm?idpublicacion={{publicacion.idpublicacion}}">
+                        Comprar ahora</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-8">
+            <div class="card p-3">
+                <h4 class="text-center">O puedes suscribirte y accederás a todo el contenido de esta editorial</h4>
+                <div class="d-flex justify-content-center py-3">
+                    {{#suscripciones}}
+                        <div class="m-2 mb-5 card p-3 text-center">
+                            <h4>{{nombre}}</h4>
+                            <h2 class="text-danger">${{valor}}</h2>
+                            <h5>{{meses}} Meses</h5>
+                            <a class="btn btn-warning"
+                               href="../pago/PagoForm?ideditorial={{editorial}}&idsuscripcion={{idsuscripcion}}">
+                            Suscribirse</a>
+                        </div>
+                    {{/suscripciones}}
+                </div>
+            </div>
+        </div>
+
+
 </div>

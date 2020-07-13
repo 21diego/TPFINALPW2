@@ -1,10 +1,7 @@
 
 <div id="menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a href="/admin/usuariosPendientes" class="dropdown-item">Lista Pendiente Usuarios</a>
-    <a class="dropdown-item" href="/admin/publicacionesPendientes">lista de publicaciones pendientes</a>
-    <div class="dropdown-divider"></div>
-    <a class="dropdown-item" href="#">Estadisticas</a>
-    <a class="dropdown-item" href="/reporte/generarReporteMensual">Generar Reporte mensual</a>
+    <h6 class="dropdown-header">Soy {{session.usuario.rol}}</h6>
+    <a class="dropdown-item" href="/logout">Cerrar sesión</a>
 </div>
 
 

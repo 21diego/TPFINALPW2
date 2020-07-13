@@ -1,4 +1,5 @@
 <?php
+include_once ("model/Rol.php");
 include_once ("dao/SuscripcionDAO.php");
 include_once ("dao/UsuarioDAO.php");
 include_once ("dao/PublicacionDAO.php");
@@ -32,6 +33,10 @@ class SuscripcionController{
         $idEditorial = $_GET["ideditorial"];
         $idpublicacion = $_GET["idpublicacion"];
         $idUsuario = $_SESSION["usuario"]["idUsuario"];
+        if($_SESSION["usuario"]["rol"] === Rol::Admin){
+            header('Location: /publicacion/ver?idpublicacion='.$idpublicacion);
+            exit();
+        }
         try {
             $suscripcion = $this->suscripcion->buscarSuscripcion($idUsuario, $idEditorial);
             $today = Library::getTodayArg();
