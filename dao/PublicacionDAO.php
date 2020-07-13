@@ -186,5 +186,14 @@ class PublicacionDAO {
                             where estado = '$estado'");
     }
 
+    public function getPublicacionesGratuitas(){
+        $publicaciones = $this->conexion->query(
+            "select p.nombre as Publicacion, e.razonSocial as Editorial from publicacion p 
+                    join editorial e on p.editorial = e.ideditorial
+                    where p.valor =  0"
+        );
+        return $publicaciones;
+    }
+
 
 }

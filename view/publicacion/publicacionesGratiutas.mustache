@@ -1,0 +1,26 @@
+<div class="d-flex justify-content-center py-3">
+    {{#listaVacia}}
+        <h2>{{listaVacia}}</h2>
+    {{/listaVacia}}
+    {{^listaVacia}}
+
+        <table class="table">
+            <thead>
+            <tr>
+                {{#keys}}
+                    <th>{{.}}</th>
+                {{/keys}}
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#publicaciones}}
+                <tr>
+                    <td>{{Publicacion}}</td>
+                    <td>{{Editorial}}</td>
+                </tr>
+            {{/publicaciones}}
+            </tbody>
+        </table>
+    {{/listaVacia}}
+</div>
