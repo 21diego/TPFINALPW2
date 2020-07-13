@@ -1,9 +1,9 @@
 <div class="card-body">
     {{#idpublicacion}}
-    <form action="ValidarForumularios?idpublicacion={{idpublicacion}}" method="post" enctype="multipart/form-data">
+    <form action="ValidarFormulario?idpublicacion={{idpublicacion}}" method="post" enctype="multipart/form-data">
      {{/idpublicacion}}
     {{^idpublicacion}}
-    <form action="ValidarForumulario?ideditorial={{ideditorial}}&idsuscripcion={{idsuscripcion}}" method="post" enctype="multipart/form-data">
+    <form action="ValidarFormulario?ideditorial={{ideditorial}}&idsuscripcion={{idsuscripcion}}" method="post" enctype="multipart/form-data">
     {{/idpublicacion}}
     <fieldset>
         <div class="form-group">

@@ -1,0 +1,32 @@
+<div>
+    <h2>Publicaciones</h2>
+    <canvas id="myChart"></canvas>
+</div>
+
+<script type="text/javascript">
+    window.onload = function() {
+        let ctx = document.getElementById("myChart").getContext("2d");
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                datasets: [{
+                    data: [
+                        {{#editoriales}}
+                            "{{publicacion}}",
+                        {{/editoriales}}
+                    ],
+                    backgroundColor:[
+                        {{#editoriales}}
+                            getRandomRgb(),
+                        {{/editoriales}}
+                    ],
+                }],
+                labels: [
+                    {{#editoriales}}
+                        "{{razonSocial}}",
+                    {{/editoriales}}
+                ]
+            }
+        });
+    }
+</script>

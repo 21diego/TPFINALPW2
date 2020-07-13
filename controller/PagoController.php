@@ -25,7 +25,7 @@ class PagoController{
        }
     }
 
-    public function postValidarForumulario(){
+    public function postValidarFormulario(){
         $data = array();
         $nroTarjeta = $_POST["nroTarjeta"];
         $codigo = $_POST["codigo"];
@@ -39,7 +39,7 @@ class PagoController{
         if(ValidarPagoForm::validarDni($dni) == false){
             $data["errorDni"] = "Numero de dni inválido";
         }
-        $idpublicacion = isset($_GET["idpublicacion"]) ? $_GET["ididpublicacion"] : false;
+        $idpublicacion = isset($_GET["idpublicacion"]) ? $_GET["idpublicacion"] : false;
         if($idpublicacion == false){
             $ideditorial = $_GET["ideditorial"];
             $idsuscripcion = $_GET["idsuscripcion"];
