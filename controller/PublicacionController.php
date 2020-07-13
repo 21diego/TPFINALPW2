@@ -58,7 +58,7 @@ class PublicacionController {
         }
         catch (Exception $ex){
             $data = array("error" => $ex->getMessage());
-            $this->renderer->render("view/contenidista/vista-publicacion.mustache",$data);
+            $this->renderer->render("view/contenidista/previsualizarPublicacion.mustache",$data);
         }
     }
 
@@ -106,7 +106,7 @@ class PublicacionController {
         }else{
             $data = array("publicacion"=> $publicacion);
         }
-        $this->renderer->render("view/contenidista/vista-publicacion.mustache", $data);
+        $this->renderer->render("view/contenidista/previsualizarPublicacion.mustache", $data);
     }
 
     public function getVerNoticias(){
@@ -167,6 +167,23 @@ class PublicacionController {
 
         $this->renderer->render("view/contenidista/publicacionesAprobadas.mustache", $data);
 
+    }
+
+    public function getVer(){
+        $idpublicacion = isset($_GET['idpublicacion'])? $_GET['idpublicacion']:null;
+        if($idpublicacion !== null){
+            $publicacion = $this->publicacion->getPublicacionById($idpublicacion);
+            if(!empty($publicacion)){
+                $data = array("publicacion" => $publicacion);
+            }
+            else{
+                $data = array("error404" => "Not Found: publicacion");
+            }
+        }
+        else{
+            $data = array("error400" => "Bad Request: idpublicacion");
+        }
+        $this->renderer->render("view/contenidista/vistaPublicacion.mustache", $data);
     }
 }
 

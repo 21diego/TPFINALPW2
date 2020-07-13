@@ -53,4 +53,9 @@ class Renderer
                 $data
             );
     }
+
+    public function rendererComponent($component, $data = array()){
+        $contentAsString = file_get_contents($component);
+        echo $this->mustache->render($contentAsString, $data);
+    }
 }

@@ -61,8 +61,10 @@ class NoticiaDAO {
         $noticia = $this
                   ->conexion
                   ->querySingleRow("select n.idnoticia, n.titulo, n.cuerpo, n.imagenURL, 
-                  n.enlace, n.editor, n.seccion, n.publicacion, n.estado
+                    n.enlace, n.editor as ideditor, Concat(u.apellido,', ',u.nombre) as editor,
+                    n.seccion, n.publicacion, n.estado
                   from noticia n 
+                    inner join usuario as u on u.idusuario = n.editor
                   where idnoticia = '$idNoticia'");
 
         return $noticia;
