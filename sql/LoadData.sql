@@ -1,5 +1,12 @@
 -- --------------------------------------------------------
 --
+-- Volcado de datos para la tabla `compra`
+--
+
+INSERT INTO `compra` (`idcompra`, `idusuario`, `idpublicacion`, `fechaCompra`) VALUES
+(1, 13, 3, '2020-07-12');
+-- --------------------------------------------------------
+--
 -- Dumping data for table `locacion`
 --
 
@@ -61,3 +68,11 @@ INSERT INTO `contenidista` (`idcontenidista`, `idUsuario`, `editorial`) VALUES
 (2, 5, 1),
 (3, 6, 2),
 (4, 7, 3);
+
+-- --------------------------------------------------------
+--
+-- Volcado de datos para la tabla `se_suscribe`
+--
+
+INSERT INTO `se_suscribe` (`codigo`, `id_suscripcion`, `id_usuario`, `id_editorial`, `fechaFin`, `fechaInicio`) VALUES
+(44, 1, 13, 1, '2020-07-12 17:10:33', '2020-07-12');

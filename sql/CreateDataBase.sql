@@ -24,6 +24,18 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `compra`
+--
+
+CREATE TABLE `compra` (
+                          `idcompra` int(11) NOT NULL,
+                          `idusuario` int(11) NOT NULL,
+                          `idpublicacion` int(11) NOT NULL,
+                          `fechaCompra` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `contenidista`
 --
 
@@ -103,12 +115,37 @@ CREATE TABLE `publicacion` (
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `recibo`
+--
+
+CREATE TABLE `recibo` (
+                          `idrecibo` int(11) NOT NULL,
+                          `suscripcionId` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `seccion`
 --
 
 CREATE TABLE `seccion` (
                            `idseccion` int(11) NOT NULL,
                            `nombre` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `se_suscribe`
+--
+
+CREATE TABLE `se_suscribe` (
+                               `codigo` int(11) NOT NULL,
+                               `id_suscripcion` int(11) NOT NULL,
+                               `id_usuario` int(11) NOT NULL,
+                               `id_editorial` int(11) NOT NULL,
+                               `fechaFin` datetime NOT NULL,
+                               `fechaInicio` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -144,6 +181,14 @@ CREATE TABLE `usuario` (
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indices de la tabla `compra`
+--
+ALTER TABLE `compra`
+    ADD PRIMARY KEY (`idcompra`),
+    ADD KEY `publicacionCompra` (`idpublicacion`),
+    ADD KEY `usuarioCompra` (`idusuario`);
 
 --
 -- Indexes for table `contenidista`
@@ -185,10 +230,26 @@ ALTER TABLE `publicacion`
     ADD KEY `editorial` (`editorial`);
 
 --
+-- Indices de la tabla `recibo`
+--
+ALTER TABLE `recibo`
+    ADD PRIMARY KEY (`idrecibo`),
+    ADD KEY `susc` (`suscripcionId`);
+
+--
 -- Indexes for table `seccion`
 --
 ALTER TABLE `seccion`
     ADD PRIMARY KEY (`idseccion`);
+
+--
+-- Indices de la tabla `se_suscribe`
+--
+ALTER TABLE `se_suscribe`
+    ADD PRIMARY KEY (`codigo`),
+    ADD KEY `suscripcion` (`id_suscripcion`),
+    ADD KEY `usuarioSuscripcion` (`id_usuario`),
+    ADD KEY `editorialSuscripcion` (`id_editorial`);
 
 --
 -- Indexes for table `suscripcion`
@@ -205,6 +266,12 @@ ALTER TABLE `usuario`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT de la tabla `compra`
+--
+ALTER TABLE `compra`
+    MODIFY `idcompra` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
 -- AUTO_INCREMENT for table `contenidista`
@@ -225,8 +292,21 @@ ALTER TABLE `publicacion`
     MODIFY `idpublicacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 --
+-- AUTO_INCREMENT de la tabla `recibo`
+--
+ALTER TABLE `recibo`
+    MODIFY `idrecibo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `se_suscribe`
+--
+ALTER TABLE `se_suscribe`
+    MODIFY `codigo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+--
 -- AUTO_INCREMENT for table `suscripcion`
 --
+
 ALTER TABLE `suscripcion`
     MODIFY `idsuscripcion` int(11) NOT NULL AUTO_INCREMENT;
 
@@ -239,6 +319,13 @@ ALTER TABLE `usuario`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Filtros para la tabla `compra`
+--
+ALTER TABLE `compra`
+    ADD CONSTRAINT `publicacionCompra` FOREIGN KEY (`idpublicacion`) REFERENCES `publicacion` (`idpublicacion`),
+    ADD CONSTRAINT `usuarioCompra` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idUsuario`);
 
 --
 -- Constraints for table `contenidista`
@@ -262,12 +349,33 @@ ALTER TABLE `noticia`
     ADD CONSTRAINT `noticia_ibfk_4` FOREIGN KEY (`publicacion`) REFERENCES `publicacion` (`idpublicacion`);
 
 --
+-- Filtros para la tabla `recibo`
+--
+ALTER TABLE `recibo`
+    ADD CONSTRAINT `susc` FOREIGN KEY (`suscripcionId`) REFERENCES `suscripcion` (`idsuscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `publicacion`
 --
 ALTER TABLE `publicacion`
     ADD CONSTRAINT `editor` FOREIGN KEY (`contenidistaEditor`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION,
     ADD CONSTRAINT `publicacion_ibfk_1` FOREIGN KEY (`editorial`) REFERENCES `editorial` (`ideditorial`),
     ADD CONSTRAINT `publicador` FOREIGN KEY (`adminPublicador`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+COMMIT;
+
+--
+-- Filtros para la tabla `recibo`
+--
+ALTER TABLE `recibo`
+    ADD CONSTRAINT `susc` FOREIGN KEY (`suscripcionId`) REFERENCES `suscripcion` (`idsuscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `se_suscribe`
+--
+ALTER TABLE `se_suscribe`
+    ADD CONSTRAINT `editorialSuscripcion` FOREIGN KEY (`id_editorial`) REFERENCES `editorial` (`ideditorial`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `suscripcion` FOREIGN KEY (`id_suscripcion`) REFERENCES `suscripcion` (`idsuscripcion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+    ADD CONSTRAINT `usuarioSuscripcion` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
