@@ -153,4 +153,12 @@ class ModuleInitializer
         return new PagoController($this->renderer);
     }
 
+    public function createReporteController(){
+        include_once ("controller/ReporteController.php");
+        include_once ("model/ReporteModel.php");
+
+        $reporteModel = new ReporteModel($this->database);
+        return new ReporteController($this->renderer,$reporteModel);
+    }
+
 }

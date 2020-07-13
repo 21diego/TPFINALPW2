@@ -33,22 +33,23 @@ class ReporteModel {
         );
     }
     public function getrecaudacionTotalSuscripciones(){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select sum(s.valor) 
            from se_suscribe se
            join suscripcion s on se.id_suscripcion = s.idsuscripcion"
         );
     }
     public function getrecaudacionTotalSuscripcionesXmes($mes, $anio){
-        $this->conexion->querySingleRow(
-                "select sum(s.valor) 
+        $total = $this->conexion->querySingleRow(
+                "select sum(s.valor) as total
            from se_suscribe se
            join suscripcion s on se.id_suscripcion = s.idsuscripcion
-           where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaIncio) = '$anio'"
+           where MONTH(se.fechaInicio) = '$mes' AND YEAR(se.fechaInicio) = '$anio'"
         );
+        return $total['total'];
     }
     public function getrecaudacionTotalSuscripcionesEntrefechas($fecha, $fecha2){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select sum(s.valor) 
            from se_suscribe se
            join suscripcion s on se.id_suscripcion = s.idsuscripcion
@@ -56,14 +57,14 @@ class ReporteModel {
         );
     }
     public function getcantidadTotalSuscripciones(){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select count(s.idsuscripcion) 
            from se_suscribe se
            join suscripcion s on se.id_suscripcion = s.idsuscripcion"
         );
     }
     public function getcantidadTotalSuscripcionesXmes($mes, $anio){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select count(s.idsuscripcion) 
            from se_suscribe se
            join suscripcion s on se.id_suscripcion = s.idsuscripcion
@@ -71,22 +72,22 @@ class ReporteModel {
         );
     }
     public function getcantidadTotalSuscripcionesEntrefechas($fecha, $fecha2){
-        $this->conexion->querySingleRow(
-                "select cout(s.idsuscripcion) 
+        return $this->conexion->querySingleRow(
+                "select count(s.idsuscripcion) 
            from se_suscribe se
            join suscripcion s on se.id_suscripcion = s.idsuscripcion
            where se.fechaInicio between '$fecha' and '$fecha2'"
         );
     }
     public function getrecaudacionTotalCompras(){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select sum(p.valor) 
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion"
         );
     }
     public function getrecaudacionTotalComprasXmes($mes, $anio){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select sum(p.valor) 
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion
@@ -94,7 +95,7 @@ class ReporteModel {
         );
     }
     public function getrecaudacionTotalComprasEntreFechas($fecha, $fecha2){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select sum(p.valor) 
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion
@@ -102,14 +103,14 @@ class ReporteModel {
         );
     }
     public function getcantidadTotalCompras(){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select count(p.idpublicacion) 
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion"
         );
     }
     public function getcantidadTotalComprasXmes($mes, $anio){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select count(p.idpublicacion) 
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion
@@ -117,7 +118,7 @@ class ReporteModel {
         );
     }
     public function getcantidadTotalComprasEntreFechas($fecha, $fecha2){
-        $this->conexion->querySingleRow(
+        return $this->conexion->querySingleRow(
                 "select count(p.idpublicacion) 
            from compra c
            join publicacion p on c.idpublicacion = p.idpublicacion
