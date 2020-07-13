@@ -157,4 +157,11 @@ class NoticiaController{
         );
     }
 
+    public function getVerNoticia(){
+        $idnoticia = $_GET['noticiaid'];
+        $noticia = $this->noticia->getNoticia($idnoticia);
+        $data = array('noticia'=>$noticia);
+        $this->renderer->rendererComponent('view/partial/Noticia.mustache', $data);
+    }
+
 }

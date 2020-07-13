@@ -1,0 +1,72 @@
+<script>
+    function muestraNoticia(id) {
+        if (id==="") {
+            document.getElementById("noticia").innerHTML="";
+            return;
+        }
+        if (window.XMLHttpRequest) {
+            xmlhttp=new XMLHttpRequest();
+        } else {
+            xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange=function() {
+            if (this.readyState===4 && this.status===200) {
+                document.getElementById("noticia").innerHTML=this.responseText;
+            }
+        }
+        xmlhttp.open("GET","/noticia/verNoticia?noticiaid="+id,true);
+        xmlhttp.send();
+    }
+    function verPortada() {
+        document.getElementById("noticia").innerHTML = "{{#publicacion.portada}}\n"+
+                "<img src=\"/resources/{{publicacion.portada}}\" alt=\"portada de {{publicacion.nombre}}\">\n" +
+                "{{/publicacion.portada}}";
+    }
+</script>
+
+
+<div class="container-fluid">
+
+    <h3 class="m-3 text-center border border-primary">{{publicacion.nombre}}</h3>
+
+    <div class="d-flex">
+        <div id="accordion" class="col-3">
+            <div class="card">
+                <div class="card-header">
+                    <button onclick="verPortada()">Portada</button>
+                </div>
+            </div>
+            {{#publicacion.secciones}}
+            <div class="card">
+                <div class="card-header" id="id{{seccion}}">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#{{seccion}}"
+                                aria-expanded="true" aria-controls="{{seccion}}">
+                            {{seccion}}
+                        </button>
+                    </h5>
+                </div>
+                <div id="{{seccion}}" class="collapse" aria-labelledby="id{{seccion}}" data-parent="#accordion">
+                    <div class="card-body">
+                        {{#noticias}}
+                            <button onclick="muestraNoticia({{id}})">{{titulo}}</button>
+                        {{/noticias}}
+                    </div>
+                </div>
+            </div>
+
+            {{/publicacion.secciones}}
+        </div>
+        <div  class="col-8">
+            <div id="noticia" class="container text-center">
+                {{#publicacion.portada}}
+                    <img src="/resources/{{publicacion.portada}}" alt="portada de {{publicacion.nombre}}">
+                {{/publicacion.portada}}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+

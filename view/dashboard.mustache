@@ -1,6 +1,11 @@
 <div class="container-fluid">
     <h1>Bienvenido, <span class="text-danger">[{{session.usuario.rol}}]</span> {{session.usuario.mail}}</h1>
 
+    <div class="d-flex justify-content-center py-3">
+        {{#publicaciones}}
+                {{>PublicacionBox}}
+        {{/publicaciones}}
+    </div>
 
 </div>
 
