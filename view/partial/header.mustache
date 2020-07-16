@@ -19,7 +19,60 @@
 
                 </li>
                 <li class="nav-item"><a class="nav-link" href="/dashboard">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="/logout">Cerrar sesión</a></li>
+                {{#session}}
+                    {{#administrador}}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Pendientes
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a href="/admin/usuariosPendientes" class="dropdown-item">Lista de Usuarios</a>
+                                <a class="dropdown-item" href="/admin/publicacionesPendientes">Lista de Publicaciones</a>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Estadisticas
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="#">Estadisticas</a>
+                                <a class="dropdown-item" href="/reporte/generarReporteMensual">Generar Reporte mensual</a>
+                            </div>
+                        </li>
+                    {{/administrador}}
+                    {{^administrador}}
+                        {{#contenidista}}
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Noticias
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a href="/noticia/crearNoticia" class="dropdown-item">Crear Noticia</a>
+                                    <a href="/noticia/noticiasEdicion" class="dropdown-item">Noticias en Edicion</a>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Publicaciones
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a href="/publicacion/crearPublicacion" class="dropdown-item">Crear Publicacion</a>
+                                    <a href="/publicacion/publicacionesEnEdicion" class="dropdown-item">En edicion</a>
+                                    <a href="/publicacion/publicacionesAprobadas" class="dropdown-item">Aprobadas</a>
+                                </div>
+                            </li>
+                        {{/contenidista}}
+                        {{^contenidista}}
+                            <li class="nav-item"><a href="#" class="nav-link">Contenido Gratuito</a></li>
+                        {{/contenidista}}
+                    {{/administrador}}
+                {{/session}}
+
+
             {{/session.usuario}}
             {{^session.usuario}}
                 <li class="nav-item"><a class="nav-link" href="/login">Iniciar sesión</a></li>

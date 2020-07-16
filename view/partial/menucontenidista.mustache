@@ -1,14 +1,8 @@
 <div id="menu" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-    <a href="#" class="dropdown-item">Ver Secciones</a>
+    <h6 class="dropdown-header">Soy {{session.usuario.rol}}</h6>
+    <a href="#" class="dropdown-item">Ver Publicaciones</a>
     <a href="/suscripcion/SuscripcionesUsuario" class="dropdown-item">Mis Compras</a>
     <a href="#" class="dropdown-item">Contenido Gratuito</a>
     <div class="dropdown-divider"></div>
-    <h5 class="dropdown-header">Noticias</h5>
-    <a href="/noticia/crearNoticia" class="dropdown-item">Crear Noticia</a>
-    <a href="/noticia/noticiasEdicion" class="dropdown-item">Noticias en Edicion</a>
-    <div class="dropdown-divider"></div>
-    <h5 class="dropdown-header">Publicaciones</h5>
-    <a href="/publicacion/crearPublicacion" class="dropdown-item">Crear Publicacion</a>
-    <a href="/publicacion/publicacionesEnEdicion" class="dropdown-item">En edicion</a>
-    <a href="/publicacion/publicacionesAprobadas" class="dropdown-item">Aprobadas</a>
+    <a class="dropdown-item" href="/logout">Cerrar sesión</a>
 </div>
