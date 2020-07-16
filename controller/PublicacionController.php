@@ -186,15 +186,15 @@ class PublicacionController {
         $this->renderer->render("view/contenidista/vistaPublicacion.mustache", $data);
     }
 
-    public function getPublicacionesGratiutas(){
+    public function getPublicacionesGratuitas(){
         try {
             $publicaciones = $this->publicacion->getPublicacionesGratuitas();
             $keys = array_keys($publicaciones[0]);
             $data = array("publicaciones" => $publicaciones, "keys" => $keys);
-            $this->renderer->render("view/publicacion/publicacionesGratiutas.mustache", $data);
+            $this->renderer->render("view/publicacion/publicacionesGratuitas.mustache", $data);
         }catch (Exception $e){
             $data = array("listaVacia" => "No hay publicaciones gratuitas");
-            $this->renderer->render("view/publicacion/publicacionesGratiutas.mustache", $data);
+            $this->renderer->render("view/publicacion/publicacionesGratuitas.mustache", $data);
         }
     }
 
