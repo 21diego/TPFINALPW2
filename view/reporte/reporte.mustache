@@ -1,4 +1,14 @@
-<button><a href="ReporteUsuarios">Reporte Usuarios</a></button>
+<ul class="nav flex-column">
+    <li class="nav-item">
+        <a class="nav-link active" href="Reporte">Suscripciones/Compras></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="ReporteUsuarios">Usuarios</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="ReporteEditorial">Editoriales</a>
+    </li>
+</ul>
 <div>
     <h2>Total recaudado ${{rt}}</h2>
     <canvas id="myChart"></canvas>
@@ -8,16 +18,16 @@
     <h2>Cantidad total suscripciones/compras {{ct}}</h2>
     <canvas id="myChart2"></canvas>
 </div>
-
 <script type="text/javascript">
-    window.onload = function() {
+    window.onload = function()
+    {
         let ctx = document.getElementById("myChart").getContext("2d");
         new Chart(ctx, {
             type: 'pie',
             data: {
                 datasets: [{
                     data: ["{{rc}}", "{{rs}}"],
-                    backgroundColor:[
+                    backgroundColor: [
                         getRandomRgb(), getRandomRgb()
                     ],
                 }],
@@ -34,8 +44,8 @@
             data: {
                 datasets: [{
                     data: ["{{cc}}", "{{cs}}"],
-                    backgroundColor:[
-                        getRandomRgb(),getRandomRgb()
+                    backgroundColor: [
+                        getRandomRgb(), getRandomRgb()
                     ],
                 }],
                 labels: [

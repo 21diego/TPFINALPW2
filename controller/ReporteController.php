@@ -31,7 +31,7 @@ class reporteController{
         $data = array("cs" => $cantSuscripciones, "rs" => $recaudacionSuscripciones,
             "cc" => $cantCompras, "rc" => $recaudacionCompras, "rt" => $totalRecaudacion, "ct" => $totalCant);
 
-        $this->renderer->render("view/reporte/index.mustache", $data);
+        $this->renderer->render("view/reporte/reporte.mustache", $data);
     }
 
     public function getReporteUsuarios(){
